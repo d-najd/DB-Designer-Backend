@@ -1,5 +1,7 @@
 package com.umldesigner.schema.table_item.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,8 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "s_item")
-public class SItem extends BaseEntity {
-
+public class SItem extends BaseEntity{
   private static final long serialVersionUID = 1L;
 
   // @JsonIgnore
@@ -52,6 +53,10 @@ public class SItem extends BaseEntity {
   @NonNull
   @Column(name = "value")
   private String value;
+
+  @NonNull
+  @Column(name = "size")
+  private Integer size = 0;
 
   @Column(name = "isPrimaryKey")
   @NonNull

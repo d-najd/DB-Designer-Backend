@@ -6,6 +6,6 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.table_item.dto.SItemP
 
 public interface SItemMapper extends GeneralMapper<SItemPojo, SItem> {
 
-  public void mapRequestedFieldForUpdate(SItem entity, SItemPojo dto);
+	public void mapRequestedFieldForUpdate(SItem entity, SItemPojo dto);
 
 }

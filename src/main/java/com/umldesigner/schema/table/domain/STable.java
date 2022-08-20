@@ -1,5 +1,6 @@
 package com.umldesigner.schema.table.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "s_table")
-public class STable extends UmlObjectEntity {
+public class STable extends UmlObjectEntity{
     private static final long serialVersionUID = 1L;
 
     /*

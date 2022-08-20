@@ -1,5 +1,7 @@
 package com.umldesigner.schema.foreign_key.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,7 +22,7 @@ import lombok.Setter;
 /**
  * @apiNote value1 and value2 in the identity refer to id's of SItems
  */
-public class SFK extends BaseMEntity {
+public class SFK extends BaseMEntity{
     private static final long serialVersionUID = 3L;
 
     @NonNull
