@@ -60,6 +60,6 @@ public class SItem extends BaseEntity{
 
   @Column(name = "isPrimaryKey")
   @NonNull
-  private Boolean isPrimaryKey = false;
+  private boolean isPrimaryKey = false;
 
 }

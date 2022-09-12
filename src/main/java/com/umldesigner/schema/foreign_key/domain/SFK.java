@@ -26,6 +26,16 @@ public class SFK extends BaseMEntity{
     private static final long serialVersionUID = 3L;
 
     @NonNull
+    @Column(name = "firstTableUuid", updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private String firstTableUuid;
+
+    @NonNull
+    @Column(name = "secondTableUuid", updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private String secondTableUuid;
+
+    @NonNull
     @Column(name = "onUpdate", updatable = false, length = 2)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private String onUpdate = "ca";

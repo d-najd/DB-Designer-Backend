@@ -10,22 +10,25 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPo
 @Service
 public interface SFKService {
 
-   public SFK findById(String fUuid, String sUuid);
 
-   public List<SFKPojo> getAll();
+    public SFK findById(String fUuid, String sUuid);
 
-   public SFKPojo getById(String fUuid, String sUuid);
+    public List<SFKPojo> getAll();
 
-   /**
-    * creates foreign key between s_item values
-    * 
-    * @param fUUid uuid of the first item
-    * @param sUuid uuid of the second item
-    * @param pojo  the identity from the pojo is not used
-    * @return pojo of the created foreign key
-    */
-   public SFKPojo createForeignKey(String fUuid, String sUuid, SFKPojo pojo);
+    public SFKPojo getById(String fUuid, String sUuid);
 
-   public SFKPojo updateForeignKey(String fUuid, String sUuid, SFKPojo pojo);
+    /**
+     * creates foreign key between s_item values
+     * 
+     * @param fUUid uuid of the first item
+     * @param sUuid uuid of the second item
+     * @param pojo  the identity from the pojo is not used
+     * @return pojo of the created foreign key
+     */
+    public SFKPojo createForeignKey(String fUuid, String sUuid, SFKPojo pojo);
+
+    public SFKPojo updateForeignKey(String fUuid, String sUuid, SFKPojo pojo);
+
+    public void removeForeignKey(String fUuid, String sUuid);
 
 }

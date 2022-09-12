@@ -23,42 +23,47 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 @RequestMapping(Endpoints.TABLE)
 public class STableController {
 
-	@Autowired
-	STableService sTableService;
+    @Autowired
+    STableService sTableService;
 
-	// this should be removed in the future for security reasons
-	@GetMapping("/id/{id}")
-	public STablePojo getById(@PathVariable(value = "id") Integer id) {
-		return sTableService.findById(id);
-	}
+    // this should be removed in the future for security reasons
+    @GetMapping("/id/{id}")
+    public STablePojo getById(@PathVariable(value = "id") Integer id) {
+        return sTableService.findById(id);
+    }
 
-	@GetMapping("/{uuid}")
-	@ResponseBody
-	public STablePojo getByUuid(@PathVariable(value = "uuid") String uuid) {
-		return sTableService.getByUuid(uuid);
-	}
+    @GetMapping("/{uuid}")
+    @ResponseBody
+    public STablePojo getByUuid(@PathVariable(value = "uuid") String uuid) {
+        return sTableService.getByUuid(uuid);
+    }
 
-	@GetMapping
-	public List<STablePojo> getAll() {
-		return sTableService.getAll();
-	}
+    @GetMapping("/test/")
+    public String getTest() {
+        return "hello";
+    }
 
-	@PostMapping
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public STablePojo createSchemaTable(@RequestBody STablePojo requestSTablePojo) {
-		return sTableService.createSchemaTable(requestSTablePojo);
-	}
+    @GetMapping
+    public List<STablePojo> getAll() {
+        return sTableService.getAll();
+    }
 
-	@PutMapping("/{uuid}")
-	@ResponseStatus(value = HttpStatus.OK)
-	public STablePojo updateSchemaTable(@PathVariable(value = "uuid") String uuid,
-			@RequestBody STablePojo requestSTablePojo) {
-		return sTableService.updateSchemaTable(uuid, requestSTablePojo);
-	}
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public STablePojo createSchemaTable(@RequestBody STablePojo requestSTablePojo) {
+        return sTableService.createSchemaTable(requestSTablePojo);
+    }
 
-	@DeleteMapping("/{uuid}")
-	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public void removeSchemaTable(@PathVariable(value = "uuid") String uuid) {
-		sTableService.removeSchemaTable(uuid);
-	}
+    @PutMapping("/{uuid}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public STablePojo updateSchemaTable(@PathVariable(value = "uuid") String uuid,
+            @RequestBody STablePojo requestSTablePojo) {
+        return sTableService.updateSchemaTable(uuid, requestSTablePojo);
+    }
+
+    @DeleteMapping("/{uuid}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void removeSchemaTable(@PathVariable(value = "uuid") String uuid) {
+        sTableService.removeSchemaTable(uuid);
+    }
 }

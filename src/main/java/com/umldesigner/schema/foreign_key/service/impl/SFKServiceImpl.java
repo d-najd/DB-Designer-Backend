@@ -14,6 +14,8 @@ import com.umldesigner.schema.foreign_key.fascade.SFKFascade;
 import com.umldesigner.schema.foreign_key.mapper.SFKMapper;
 import com.umldesigner.schema.foreign_key.repository.SFKRepository;
 import com.umldesigner.schema.foreign_key.service.SFKService;
+import com.umldesigner.schema.table.api.STableController;
+import com.umldesigner.schema.table_item.api.SItemController;
 import com.umldesigner.submodules.UmlDesignerShared.infrastructure.pojo.identities.BaseMIdentityPojo;
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
@@ -26,6 +28,9 @@ public class SFKServiceImpl implements SFKService {
 
     @Autowired
     SFKRepository sfkRepository;
+
+    @Autowired
+    SItemController itemController;
 
     @Autowired
     SFKMapper sfkMapper;
@@ -68,6 +73,8 @@ public class SFKServiceImpl implements SFKService {
 
         pojo.setIdentity(new BaseMIdentityPojo(fUuid, sUuid));
         sfkFascade.isValid(fUuid, sUuid, pojo);
+        pojo.setFirstTableUuid(itemController.getByUuid(fUuid).getTableUuid_());
+        pojo.setSecondTableUuid(itemController.getByUuid(sUuid).getTableUuid_());
 
         SFK persistedSfk = sfkRepository.save(sfkMapper.dtoToEntity(pojo));
 
@@ -87,5 +94,12 @@ public class SFKServiceImpl implements SFKService {
         log.debug("test {}, {}", persistedSFK.getOnDelete(), persistedSFK.getOnUpdate());
 
         return sfkMapper.entityToDto(sfkRepository.saveAndFlush(persistedSFK));
+    }
+
+    @Override
+    public void removeForeignKey(String fUuid, String sUuid){
+        log.debug("Eecute removeForeignKey with parameters {}. {}", fUuid, sUuid);
+
+        sfkRepository.deleteById(new BaseMIdentity(fUuid, sUuid));
     }
 }
