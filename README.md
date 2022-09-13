@@ -5,7 +5,7 @@
 
 # Getting Started
 
-Api for an app used for generating uml diagrams in multiple different ways
+Backend for the app for designing sql databases. 
 
 Follow the instructions below to get a copy of the project running on your local machine
 
@@ -19,7 +19,7 @@ Follow the instructions below to get a copy of the project running on your local
 
 * clone the repository using [Git](https://git-scm.com/downloads)
 ```Git
-git clone https://github.com/d-najd/UmlDesignerAppApi
+git clone --recursive https://github.com/d-najd/UmlDesignerAppApi
 ```
 * Set datasource url of your MYSQL DB application.properties -> spring.datasource.url
 * Set mysql user value into application.properties -> spring.datasource.username
@@ -32,14 +32,15 @@ git clone https://github.com/d-najd/UmlDesignerAppApi
 * java -jar .\target\umldesigner-0.0.1-SNAPSHOT.jar
 
 ## Docker Setup (WORK IN PROGESS)
- there is file called db_tables_uml.txt which has the infrastructure of the database, that will have to do until docker is implemented
+ there is file called db_tables_uml.txt inside the project files which has most of the infrastructure of the database, that will have to do until docker is implemented
 
 # Features
  - OAuth 2.0 auth (work in progress)
  - Json support (work in progress)
    - Ability to generate uml diagrams from json files
  - Mysql support (work in progress)
-   - Ability to generate uml diagrams from mysql code
+   - Ability to generate uml diagrams from sql code
+   - Ability to get sql code from a given diagram
 
 # Demo
  Visit https://www.postman.com/collections/e3ef56648f12f06fc6e4 to see available mappings
