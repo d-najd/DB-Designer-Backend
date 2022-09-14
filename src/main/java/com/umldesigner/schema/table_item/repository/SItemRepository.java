@@ -18,4 +18,5 @@ public interface SItemRepository extends JpaRepository<SItem, Integer> {
     public Optional<SItem> findByTableUuidAndUuid(String tUuid, String uuid); // spring just keeps on givin
 
     public Optional<SItem> findByTableUuid_AndUuid(String tableUuid_, String uuid);
+
 }

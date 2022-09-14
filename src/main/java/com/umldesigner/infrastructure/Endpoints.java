@@ -27,4 +27,9 @@ public class Endpoints {
      * Foreign key between SItems endpoint contains {@value #ITEM} before it
      */
     public static final String ITEM_FK = ITEM + "/foreignKey";
+
+    /**
+     * The info for the item like if it is a primary key and other stuff
+     */
+    public static final String ITEM_INFO = ITEM + "/info";
 }

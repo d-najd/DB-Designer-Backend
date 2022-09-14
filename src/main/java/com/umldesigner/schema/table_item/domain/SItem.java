@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -15,51 +16,54 @@ import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umldesigner.infrastructure.domain.entities.BaseEntity;
+import com.umldesigner.schema.item_info.domain.SItemInfo;
 import com.umldesigner.schema.table.domain.STable;
 
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @implSpec first an item info has to be created before an item is created
+ */
+
 @Getter
 @Setter
 @Entity
 @Table(name = "s_item")
-public class SItem extends BaseEntity{
-  private static final long serialVersionUID = 1L;
+public class SItem extends BaseEntity {
+    private static final long serialVersionUID = 1L;
+    
+    @JsonIgnore
+    @ManyToOne(targetEntity = STable.class, fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NonNull
+    @JoinColumn(name = "tableUuid", referencedColumnName = "uuid", updatable = false)
+    private STable table;
 
-  // @JsonIgnore
-  // @ManyToMany(mappedBy = "tableItems")
-  // private Set<SchemaTable> boards = new HashSet<>();
+    @OneToOne(optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NonNull
+    @JoinColumn(name = "itemInfoUuid", referencedColumnName = "uuid")
+    private SItemInfo itemInfo;
 
-  @JsonIgnore
-  @ManyToOne(targetEntity = STable.class, fetch = FetchType.LAZY, optional = false)
-  @OnDelete(action = OnDeleteAction.CASCADE)
-  @NonNull
-  @JoinColumn(name = "tableUuid", referencedColumnName = "uuid", updatable = false)
-  private STable table;
+    @Column(name = "tableUuid", updatable = false, insertable = false)
+    private String tableUuid_;
 
-  @Column(name = "tableUuid", updatable = false, insertable = false)
-  private String tableUuid_;
+    @JsonIgnore
+    @NonNull
+    @Column(name = "position", insertable = false)
+    private Integer position;
 
-  @JsonIgnore
-  @NonNull
-  @Column(name = "position", insertable = false)
-  private Integer position;
+    @NonNull
+    @Column(name = "type")
+    private String type;
 
-  @NonNull
-  @Column(name = "type")
-  private String type;
+    @NonNull
+    @Column(name = "value")
+    private String value;
 
-  @NonNull
-  @Column(name = "value")
-  private String value;
-
-  @NonNull
-  @Column(name = "size")
-  private Integer size = 0;
-
-  @Column(name = "isPrimaryKey")
-  @NonNull
-  private boolean isPrimaryKey = false;
+    @NonNull
+    @Column(name = "size")
+    private Integer size = 0;
 
 }
