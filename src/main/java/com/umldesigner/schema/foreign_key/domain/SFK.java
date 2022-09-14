@@ -21,6 +21,8 @@ import lombok.Setter;
 @Table(name = "s_fk")
 /**
  * @apiNote value1 and value2 in the identity refer to id's of SItems
+ * 
+ * @implSpec to use an sfk first an item has to be created
  */
 public class SFK extends BaseMEntity{
     private static final long serialVersionUID = 3L;

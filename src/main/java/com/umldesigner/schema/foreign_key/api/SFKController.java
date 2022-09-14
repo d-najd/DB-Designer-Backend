@@ -30,6 +30,11 @@ public class SFKController {
     @Autowired
     SFKService sfkService;
 
+    @GetMapping
+    public List<SFKPojo> getAll() {
+        return sfkService.getAll();
+    }
+
     /**
      * gets Schema Item Foreign Key with inputs as Uuid of the first and second item
      * 
@@ -42,11 +47,6 @@ public class SFKController {
             @PathVariable(value = "fUuid") String fUuid,
             @PathVariable(value = "sUuid") String sUuid) {
         return sfkService.getById(fUuid, sUuid);
-    }
-
-    @GetMapping
-    public List<SFKPojo> getAll() {
-        return sfkService.getAll();
     }
 
     @PostMapping("/{fUuid}/{sUuid}")

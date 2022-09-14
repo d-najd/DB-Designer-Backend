@@ -98,7 +98,6 @@ public class SItemServiceImpl implements SItemService {
 
     @Override
     public SItemPojo createSchemaItem(String tUuid, SItemPojo sItemPojo, Integer position) {
-
         log.debug("Execute createSchemaItem parameters {}, {}", tUuid, sItemPojo);
         SItem transientSchemaItem = sItemMapper.dtoToEntity(sItemPojo);
         STable sTable = sTableService.findByUuid(tUuid);

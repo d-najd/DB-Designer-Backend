@@ -28,6 +28,11 @@ public class SItemInfoMapperImpl extends AbstractGeneralMapper implements SItemI
     }
 
     public void mapRequestedFieldForUpdate(SItemInfo entity, SItemInfoPojo dto){
+        entity.setAllowNull(dto.getAllowNull());
+        entity.setAutoIncrement(dto.getAutoIncrement());
+        // entity.setForeignKey(dto.getForeignKey()); this should be set somewhere else
+        entity.setPrimaryKey(dto.getPrimaryKey());
+        entity.setUniqueKey(dto.getUniqueKey());
+        entity.setUnsigned(dto.getUnsigned());
     }
-    
 }

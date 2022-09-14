@@ -12,7 +12,6 @@ public class SItemTestUtil {
 
     public static SItem createMockSItemEntity() {
         SItem mock = new SItem();
-        mock.setIsPrimaryKey(false);
         mock.setUuid("Mock UUID");
         mock.setPosition(0);
         mock.setType("Mock Type");
@@ -23,7 +22,6 @@ public class SItemTestUtil {
     public static SItem createMockSItemEntity(STable table, Boolean isPrimaryKey, String type, String value,
             String uuid, int position) {
         SItem mock = new SItem();
-        mock.setIsPrimaryKey(isPrimaryKey);
         mock.setPosition(position);
         mock.setTable(table);
         mock.setType(type);
@@ -55,7 +53,6 @@ public class SItemTestUtil {
         SItemPojo mock = new SItemPojo();
         mock.setUuid(uuid);
         mock.setTable(table);
-        mock.setIsPrimaryKey(isPrimaryKey);
         mock.setType(type);
         mock.setValue(value);
         return mock;
