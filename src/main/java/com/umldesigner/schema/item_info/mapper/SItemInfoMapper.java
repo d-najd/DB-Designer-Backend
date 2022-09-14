@@ -5,5 +5,5 @@ import com.umldesigner.schema.item_info.domain.SItemInfo;
 import com.umldesigner.submodules.UmlDesignerShared.schema.item_info.SItemInfoPojo;
 
 public interface SItemInfoMapper extends GeneralMapper<SItemInfoPojo, SItemInfo> {
-    public void mapRequestedFieldForUpdate(SItemInfoPojo entity, SItemInfo dto);
+    public void mapRequestedFieldForUpdate(SItemInfo entity, SItemInfoPojo dto);
 }
