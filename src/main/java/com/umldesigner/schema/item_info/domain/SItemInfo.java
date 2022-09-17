@@ -1,12 +1,21 @@
 package com.umldesigner.schema.item_info.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umldesigner.infrastructure.domain.entities.BaseEntity;
 import com.umldesigner.schema.foreign_key.domain.SFK;
 import com.umldesigner.schema.table_item.domain.SItem;
@@ -26,10 +35,10 @@ import lombok.Setter;
 public class SItemInfo extends BaseEntity {
     private static final long serialVersionUID = 5L;
 
-    @NonNull
-    @OneToOne(mappedBy = "itemInfo")
-    private SItem item;
-
+    //@OneToOne
+    //@JoinColumn(referencedColumnName = "uuid")
+    //private SItemInfo item;
+    
     @NonNull
     @Column(name = "primaryKey")
     private Boolean primaryKey = false;
