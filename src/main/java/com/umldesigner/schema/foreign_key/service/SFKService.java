@@ -11,11 +11,15 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPo
 public interface SFKService {
 
 
-    public SFK findById(String fUuid, String sUuid);
+    public SFK findByUuid(String fUuid, String sUuid);
+
+    public SFK findByFirstUuid(String fUuid);
 
     public List<SFKPojo> getAll();
 
-    public SFKPojo getById(String fUuid, String sUuid);
+    public SFKPojo getByUuid(String fUuid, String sUuid);
+
+    public SFKPojo getByFirstUuid(String fUuid);
 
     /**
      * creates foreign key between s_item values

@@ -26,7 +26,7 @@ public class BaseEntity implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
-    private Integer id;
+    private Long id;
 
     @Column(name = "uuid", updatable = false)
     private String uuid;

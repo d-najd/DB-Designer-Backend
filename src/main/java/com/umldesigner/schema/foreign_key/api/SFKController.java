@@ -46,7 +46,7 @@ public class SFKController {
     public SFKPojo getByIdentity(
             @PathVariable(value = "fUuid") String fUuid,
             @PathVariable(value = "sUuid") String sUuid) {
-        return sfkService.getById(fUuid, sUuid);
+        return sfkService.getByUuid(fUuid, sUuid);
     }
 
     @PostMapping("/{fUuid}/{sUuid}")

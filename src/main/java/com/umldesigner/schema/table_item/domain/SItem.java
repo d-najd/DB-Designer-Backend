@@ -1,7 +1,5 @@
 package com.umldesigner.schema.table_item.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
@@ -35,19 +31,22 @@ import lombok.Setter;
 @Entity
 @Table(name = "s_item")
 /*
-    TODO NOTE find a way to cascade on delete, currently doing it from mysql code and it will break in the future
-
-    Attemted stuff
-    any sort of annotation or field before class, inside the @SecondaryTable any anything of the sort,
-    setting @OnDelete on the field as annotation (the is a warning on the anotation info that it doesnt work so)
-*/
-@SecondaryTable(
-    name = "s_item_info",
-    pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid")
-)
+ * TODO NOTE find a way to cascade on delete, currently doing it from mysql code
+ * and it will break in the future
+ * 
+ * Attemted stuff
+ * any sort of annotation or field before class, inside the @SecondaryTable any
+ * anything of the sort,
+ * setting @OnDelete on the field as annotation (the is a warning on the
+ * anotation info that it doesnt work so)
+ */
+// @SecondaryTable(
+// name = "s_item_info",
+// pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid")
+// )
 public class SItem extends BaseEntity {
     private static final long serialVersionUID = 1L;
-    
+
     @JsonIgnore
     @ManyToOne(targetEntity = STable.class, fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -58,8 +57,9 @@ public class SItem extends BaseEntity {
     @Column(name = "tableUuid", updatable = false, insertable = false)
     private String tableUuid_;
 
-    //@OneToOne(mappedBy = "item")
-    //private SItemInfo itemInfo;
+    @OneToOne(mappedBy = "item", cascade = CascadeType.REMOVE)
+    @PrimaryKeyJoinColumn
+    private SItemInfo itemInfo;
 
     @JsonIgnore
     @NonNull

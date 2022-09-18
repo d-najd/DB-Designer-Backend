@@ -8,18 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.umldesigner.infrastructure.domain.entities.BaseEntity;
 import com.umldesigner.schema.foreign_key.domain.SFK;
 import com.umldesigner.schema.table_item.domain.SItem;
-import com.umldesigner.submodules.UmlDesignerShared.infrastructure.pojo.pojos.BasePojo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,17 +29,32 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "s_item_info")
-public class SItemInfo extends BaseEntity {
+public class SItemInfo implements Serializable {
     private static final long serialVersionUID = 5L;
 
-    //@OneToOne
-    //@JoinColumn(referencedColumnName = "uuid")
-    //private SItemInfo item;
-    
+    // @OneToOne
+    // @JoinColumn(referencedColumnName = "itemInfo")
+    // private SItem item;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private Long id;
+
+    @Column(name = "uuid", updatable = false, insertable = false)
+    private String uuid;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    @JsonIgnore
+    private SItem item;
+
     @NonNull
     @Column(name = "primaryKey")
     private Boolean primaryKey = false;
-    
+
     @NonNull
     @Column(name = "allowNull")
     private Boolean allowNull = false;
@@ -59,8 +71,8 @@ public class SItemInfo extends BaseEntity {
     @Column(name = "unsigned")
     private Boolean unsigned = false;
 
-    @NonNull
-    @Column(name = "foreignKey")
-    private SFK foreignKey;
+    // @NonNull
+    // @Column(name = "foreignKey")
+    // private SFK foreignKey;
 
 }

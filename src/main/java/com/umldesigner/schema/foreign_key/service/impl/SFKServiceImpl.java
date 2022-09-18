@@ -39,17 +39,28 @@ public class SFKServiceImpl implements SFKService {
     SFKFascade sfkFascade;
 
     @Override
-    public SFK findById(String fUuid, String sUuid) {
-        log.debug("Execute findById with parameters {}, {}", fUuid, sUuid);
+    public SFK findByUuid(String fUuid, String sUuid) {
+        log.debug("Execute findByUuid with parameters {}, {}", fUuid, sUuid);
 
         SFK sfkEntity = sfkRepository.findById(new BaseMIdentity(fUuid, sUuid))
                 .orElseThrow(() -> {
-                    log.error("Error: Resource Schema Primary Key with identity {} is not found",
+                    log.error("Error: Resource Schema Foreign Key with identity {} not found",
                             new BaseMIdentity(fUuid, sUuid));
                     return new ResourceNotFoundException("Resource Schema Primary Key not found");
                 });
 
         return sfkEntity;
+    }
+
+    @Override
+    public SFK findByFirstUuid(String fUuid) {
+        log.debug("Execute findByFirstUuid with parameter {}", fUuid);
+        
+        return sfkRepository.findByIdentityFirstUuid(fUuid)
+                .orElseThrow(() -> {
+                    log.error("Error: Resource Schema Foreign Key with first uuid {} not found", fUuid);
+                    return new ResourceNotFoundException("Resource Schema Primary Key not found");
+                });
     }
 
     public List<SFKPojo> getAll() {
@@ -58,10 +69,17 @@ public class SFKServiceImpl implements SFKService {
         return sfkMapper.mapList(sfkRepository.findAll(), SFKPojo.class);
     }
 
-    public SFKPojo getById(String fUuid, String sUuid) {
+    public SFKPojo getByUuid(String fUuid, String sUuid) {
         log.debug("Execute getById with parameters {}, {}", fUuid, sUuid);
 
-        return sfkMapper.entityToDto(findById(fUuid, sUuid));
+        return sfkMapper.entityToDto(findByUuid(fUuid, sUuid));
+    }
+
+    @Override
+    public SFKPojo getByFirstUuid(String fUuid) {
+        log.debug("Execute getByFirstUuid with parameter {}", fUuid);
+
+        return sfkMapper.entityToDto(findByFirstUuid(fUuid));
     }
 
     // TODO whem implementing multiple projects make sure that the foreign keys
@@ -88,7 +106,7 @@ public class SFKServiceImpl implements SFKService {
         pojo.setIdentity(new BaseMIdentityPojo(fUuid, sUuid));
         sfkFascade.isValid(fUuid, sUuid, pojo);
 
-        SFK persistedSFK = findById(fUuid, sUuid);
+        SFK persistedSFK = findByUuid(fUuid, sUuid);
         sfkMapper.mapRequestedFieldForUpdate(persistedSFK, pojo);
 
         log.debug("test {}, {}", persistedSFK.getOnDelete(), persistedSFK.getOnUpdate());
@@ -102,4 +120,6 @@ public class SFKServiceImpl implements SFKService {
 
         sfkRepository.deleteById(new BaseMIdentity(fUuid, sUuid));
     }
+
+
 }
