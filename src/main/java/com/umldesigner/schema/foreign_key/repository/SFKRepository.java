@@ -9,9 +9,6 @@ import com.umldesigner.infrastructure.domain.identities.BaseMIdentity;
 import com.umldesigner.schema.foreign_key.domain.SFK;
 
 @Repository
-public interface SFKRepository extends JpaRepository<SFK, BaseMIdentity> {
-    public Optional<SFK> findById(BaseMIdentity identity);
-
-    public Optional<SFK> findByIdentityFirstUuid(String uuid);
+public interface SFKRepository extends JpaRepository<SFK, Integer> {
     
 }

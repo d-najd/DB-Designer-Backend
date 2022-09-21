@@ -16,6 +16,7 @@ import com.umldesigner.schema.foreign_key.repository.SFKRepository;
 import com.umldesigner.schema.foreign_key.service.SFKService;
 import com.umldesigner.schema.table.api.STableController;
 import com.umldesigner.schema.table_item.api.SItemController;
+import com.umldesigner.schema.table_item.service.SItemService;
 import com.umldesigner.submodules.UmlDesignerShared.infrastructure.pojo.identities.BaseMIdentityPojo;
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
@@ -30,7 +31,7 @@ public class SFKServiceImpl implements SFKService {
     SFKRepository sfkRepository;
 
     @Autowired
-    SItemController itemController;
+    SItemService sItemService;
 
     @Autowired
     SFKMapper sfkMapper;
@@ -39,28 +40,17 @@ public class SFKServiceImpl implements SFKService {
     SFKFascade sfkFascade;
 
     @Override
-    public SFK findByUuid(String fUuid, String sUuid) {
-        log.debug("Execute findByUuid with parameters {}, {}", fUuid, sUuid);
+    public SFK findByUuid(String uuid) {
+        log.debug("Execute findByUuid with parameters {}");
 
-        SFK sfkEntity = sfkRepository.findById(new BaseMIdentity(fUuid, sUuid))
+        SFK sfkEntity = sfkRepository.findById(uuid)
                 .orElseThrow(() -> {
                     log.error("Error: Resource Schema Foreign Key with identity {} not found",
-                            new BaseMIdentity(fUuid, sUuid));
+                            uuid);
                     return new ResourceNotFoundException("Resource Schema Primary Key not found");
                 });
 
         return sfkEntity;
-    }
-
-    @Override
-    public SFK findByFirstUuid(String fUuid) {
-        log.debug("Execute findByFirstUuid with parameter {}", fUuid);
-        
-        return sfkRepository.findByIdentityFirstUuid(fUuid)
-                .orElseThrow(() -> {
-                    log.error("Error: Resource Schema Foreign Key with first uuid {} not found", fUuid);
-                    return new ResourceNotFoundException("Resource Schema Primary Key not found");
-                });
     }
 
     public List<SFKPojo> getAll() {
@@ -69,30 +59,21 @@ public class SFKServiceImpl implements SFKService {
         return sfkMapper.mapList(sfkRepository.findAll(), SFKPojo.class);
     }
 
-    public SFKPojo getByUuid(String fUuid, String sUuid) {
-        log.debug("Execute getById with parameters {}, {}", fUuid, sUuid);
+    public SFKPojo getByUuid(String uuid) {
+        log.debug("Execute getById with parameters {}", uuid);
 
-        return sfkMapper.entityToDto(findByUuid(fUuid, sUuid));
-    }
-
-    @Override
-    public SFKPojo getByFirstUuid(String fUuid) {
-        log.debug("Execute getByFirstUuid with parameter {}", fUuid);
-
-        return sfkMapper.entityToDto(findByFirstUuid(fUuid));
+        return sfkMapper.entityToDto(findByUuid(uuid));
     }
 
     // TODO whem implementing multiple projects make sure that the foreign keys
     // don't point across multiple projects and realities
 
     @Override
-    public SFKPojo createForeignKey(String fUuid, String sUuid, SFKPojo pojo) {
-        log.debug("Execute createForeignKey with parameters {}. {}. {}", fUuid, sUuid, pojo);
+    public SFKPojo createForeignKey(String uuid, String itemUuid, SFKPojo pojo) {
+        log.debug("Execute createForeignKey with parameters {}. {}. {}", uuid, itemUuid, pojo);
 
-        pojo.setIdentity(new BaseMIdentityPojo(fUuid, sUuid));
-        sfkFascade.isValid(fUuid, sUuid, pojo);
-        pojo.setFirstTableUuid(itemController.getByUuid(fUuid).getTableUuid_());
-        pojo.setSecondTableUuid(itemController.getByUuid(sUuid).getTableUuid_());
+        pojo.setTableUuid(sItemService.getByUuid(uuid).getTableUuid_());
+        sfkFascade.isValid(uuid, itemUuid, pojo);
 
         SFK persistedSfk = sfkRepository.save(sfkMapper.dtoToEntity(pojo));
 
@@ -100,25 +81,23 @@ public class SFKServiceImpl implements SFKService {
     }
 
     @Override
-    public SFKPojo updateForeignKey(String fUuid, String sUuid, SFKPojo pojo) {
-        log.debug("Execute updateForeignKey with parameters {}, {}, {}", fUuid, sUuid, pojo);
+    public SFKPojo updateForeignKey(String uuid, String itemUuid, SFKPojo pojo) {
+        log.debug("Execute updateForeignKey with parameters {}, {}, {}", uuid, itemUuid, pojo);
 
-        pojo.setIdentity(new BaseMIdentityPojo(fUuid, sUuid));
-        sfkFascade.isValid(fUuid, sUuid, pojo);
+        //just in case something changes in future, unnecessary check atm
+        sfkFascade.isValid(uuid, itemUuid, pojo);
 
-        SFK persistedSFK = findByUuid(fUuid, sUuid);
+        SFK persistedSFK = findByUuid(uuid);
         sfkMapper.mapRequestedFieldForUpdate(persistedSFK, pojo);
-
-        log.debug("test {}, {}", persistedSFK.getOnDelete(), persistedSFK.getOnUpdate());
 
         return sfkMapper.entityToDto(sfkRepository.saveAndFlush(persistedSFK));
     }
 
     @Override
-    public void removeForeignKey(String fUuid, String sUuid){
-        log.debug("Eecute removeForeignKey with parameters {}. {}", fUuid, sUuid);
+    public void removeForeignKey(String uuid){
+        log.debug("Eecute removeForeignKey with parameters {}. {}", uuid);
 
-        sfkRepository.deleteById(new BaseMIdentity(fUuid, sUuid));
+        sfkRepository.deleteById(uuid);
     }
 
 

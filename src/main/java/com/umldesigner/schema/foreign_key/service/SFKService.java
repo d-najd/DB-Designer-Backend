@@ -9,17 +9,11 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPo
 
 @Service
 public interface SFKService {
-
-
-    public SFK findByUuid(String fUuid, String sUuid);
-
-    public SFK findByFirstUuid(String fUuid);
+    public SFK findByUuid(String uuid);
 
     public List<SFKPojo> getAll();
 
-    public SFKPojo getByUuid(String fUuid, String sUuid);
-
-    public SFKPojo getByFirstUuid(String fUuid);
+    public SFKPojo getByUuid(String fUuid);
 
     /**
      * creates foreign key between s_item values
@@ -29,10 +23,10 @@ public interface SFKService {
      * @param pojo  the identity from the pojo is not used
      * @return pojo of the created foreign key
      */
-    public SFKPojo createForeignKey(String fUuid, String sUuid, SFKPojo pojo);
+    public SFKPojo createForeignKey(String uuid, String itemUuid, SFKPojo pojo);
 
-    public SFKPojo updateForeignKey(String fUuid, String sUuid, SFKPojo pojo);
+    public SFKPojo updateForeignKey(String uuid, String itemUuid, SFKPojo pojo);
 
-    public void removeForeignKey(String fUuid, String sUuid);
+    public void removeForeignKey(String uuid);
 
 }

@@ -19,11 +19,11 @@ public class SFKFascadeImpl implements SFKFascade {
     SItemService sItemService; // TODO find a way to get rid of this
 
     @Override
-    public boolean isValid(String fUuid, String sUuid, SFKPojo pojo) {
-        log.debug("Execute isValid with parameters {}, {}, {}", fUuid, sUuid, pojo);
+    public boolean isValid(String uuid, String sUuid, SFKPojo pojo) {
+        log.debug("Execute isValid with parameters {}, {}, {}", uuid, sUuid, pojo);
 
-        if (sameTableFKCheck(fUuid, sUuid)) {
-            log.error("Foreign key links to the same table with parameters {}. {}. {}", fUuid, sUuid, pojo);
+        if (sameTableFKCheck(uuid, sUuid)) {
+            log.error("Foreign key links to the same table with parameters {}. {}. {}", uuid, sUuid, pojo);
             throw new IllegalArgumentException("Foreign key links to the same table");
         }
 
@@ -33,10 +33,11 @@ public class SFKFascadeImpl implements SFKFascade {
                     "Invalid Argument entered for OnDelete or OnUpdate, available arguments are: No Action, REstrict, Cascade, Set Null, Set Default");
         }
 
-        if (!fkIdentityMatch(fUuid, sUuid, pojo)) {
+        if (!fkIdentityMatch(uuid, sUuid, pojo)) {
             log.error(
-                    "Identity located in the {} and identity created using {}, {} don't match, create a identity using fUuid and sUuid and set it",
-                    pojo, fUuid, sUuid);
+                //TODO retwrite this
+                    "Identity located in the {} and identity created using {}, {} don't match, create a identity using uuid and sUuid and set it",
+                    pojo, uuid, sUuid);
             throw new InternalError("Misconfiguration on the server side");
         }
 
@@ -71,12 +72,5 @@ public class SFKFascadeImpl implements SFKFascade {
         }
 
         return true;
-    }
-
-    @Override
-    public boolean fkIdentityMatch(String fUuid, String sUuid, SFKPojo pojo) {
-        log.debug("Execute fkIdentityMatch with parameters {}, {}. {}", fUuid, sUuid, pojo);
-
-        return pojo.getIdentity().equals(new BaseMIdentityPojo(fUuid, sUuid));
     }
 }

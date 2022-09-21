@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
 
+import com.umldesigner.infrastructure.domain.entities.BaseEntity;
 import com.umldesigner.infrastructure.domain.entities.BaseMEntity;
 
 import lombok.Getter;
@@ -24,18 +25,12 @@ import lombok.Setter;
  * 
  * @implSpec to use an sfk first an item has to be created
  */
-public class SFK extends BaseMEntity{
+public class SFK extends BaseEntity{
     private static final long serialVersionUID = 3L;
 
-    @NonNull
-    @Column(name = "firstTableUuid", updatable = false)
+    @Column(name = "tableUuid", updatable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private String firstTableUuid;
-
-    @NonNull
-    @Column(name = "secondTableUuid", updatable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private String secondTableUuid;
+    private String tableUuid;
 
     @NonNull
     @Column(name = "onUpdate", updatable = false, length = 2)
