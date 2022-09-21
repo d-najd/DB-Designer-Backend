@@ -57,7 +57,7 @@ public class SItem extends BaseEntity {
     @Column(name = "tableUuid", updatable = false, insertable = false)
     private String tableUuid_;
 
-    @OneToOne(mappedBy = "item", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "item", cascade = CascadeType.REMOVE, optional = true)
     @PrimaryKeyJoinColumn
     private SItemInfo itemInfo;
 
