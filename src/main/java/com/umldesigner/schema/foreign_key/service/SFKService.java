@@ -18,14 +18,14 @@ public interface SFKService {
     /**
      * creates foreign key between s_item values
      * 
-     * @param fUUid uuid of the first item
-     * @param sUuid uuid of the second item
+     * @param uuid id of the main item (the one that is doing the reference)
+     * @param refUuid id of the secondary item (the one that is being referenced)
      * @param pojo  the identity from the pojo is not used
      * @return pojo of the created foreign key
      */
-    public SFKPojo createForeignKey(String uuid, String itemUuid, SFKPojo pojo);
+    public SFKPojo createForeignKey(String uuid, String refUuid, SFKPojo pojo);
 
-    public SFKPojo updateForeignKey(String uuid, String itemUuid, SFKPojo pojo);
+    public SFKPojo updateForeignKey(String uuid, SFKPojo pojo);
 
     public void removeForeignKey(String uuid);
 

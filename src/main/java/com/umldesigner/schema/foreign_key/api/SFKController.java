@@ -35,43 +35,32 @@ public class SFKController {
         return sfkService.getAll();
     }
 
-    /**
-     * gets Schema Item Foreign Key with inputs as Uuid of the first and second item
-     * 
-     * @param fUuid Uuid of the first item
-     * @param sUuid Uuid of the second item
-     * @return Foreign Key Pojo
-     */
-    @GetMapping("/{fUuid}/{sUuid}")
-    public SFKPojo getByIdentity(
-            @PathVariable(value = "fUuid") String fUuid,
-            @PathVariable(value = "sUuid") String sUuid) {
-        return sfkService.getByUuid(fUuid, sUuid);
+    public SFKPojo getById(
+            @PathVariable(value = "uuid") String uuid) {
+        return sfkService.getByUuid(uuid);
     }
 
-    @PostMapping("/{fUuid}/{sUuid}")
+    @PostMapping("/{uuid}/{refUuid}")
     @ResponseStatus(value = HttpStatus.CREATED)
     public SFKPojo createSchemaForeignKey(
             @RequestBody SFKPojo requestSfkPojo,
-            @PathVariable(value = "fUuid") String fUuid,
-            @PathVariable(value = "sUuid") String sUuid) {
-        return sfkService.createForeignKey(fUuid, sUuid, requestSfkPojo);
+            @PathVariable(value = "uuid") String uuid,
+            @PathVariable(value = "refUuid") String refUuid) {
+        return sfkService.createForeignKey(uuid, refUuid, requestSfkPojo);
     }
 
-    @PutMapping("/{fUuid}/{sUuid}")
+    @PutMapping("/{uuid}")
     @ResponseStatus(value = HttpStatus.OK)
     public SFKPojo updateSchemaForeignKey(
             @RequestBody SFKPojo requestSfkPojo,
-            @PathVariable(value = "fUuid") String fUuid,
-            @PathVariable(value = "sUuid") String sUuid) {
-        return sfkService.updateForeignKey(fUuid, sUuid, requestSfkPojo);
+            @PathVariable(value = "uuid") String uuid) {
+        return sfkService.updateForeignKey(uuid, requestSfkPojo);
     }
 
-    @DeleteMapping("/{fUuid}/{sUuid}")
+    @DeleteMapping("/{fUuid}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void removeSchemaForeignKey(
-            @PathVariable(value = "fUuid") String fUuid,
-            @PathVariable(value = "sUuid") String sUuid) {
-                sfkService.removeForeignKey(fUuid, sUuid);
+            @PathVariable(value = "uuid") String uuid) {
+                sfkService.removeForeignKey(uuid);
             }
 }

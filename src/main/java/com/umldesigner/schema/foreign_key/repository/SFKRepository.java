@@ -9,6 +9,6 @@ import com.umldesigner.infrastructure.domain.identities.BaseMIdentity;
 import com.umldesigner.schema.foreign_key.domain.SFK;
 
 @Repository
-public interface SFKRepository extends JpaRepository<SFK, Integer> {
+public interface SFKRepository extends JpaRepository<SFK, String> {
     
 }

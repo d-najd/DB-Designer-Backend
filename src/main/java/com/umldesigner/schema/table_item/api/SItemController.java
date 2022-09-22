@@ -29,12 +29,6 @@ public class SItemController {
 	// @Autowired
 	// SItemRepository sItemRepository;
 
-	// should be removed in future for security reasons
-	@GetMapping("/id/{id}")
-	public SItemPojo getById(@PathVariable(value = "id") Integer id) {
-		return sItemService.getById(id);
-	}
-
 	@GetMapping("/{uuid}")
 	public SItemPojo getByUuid(@PathVariable(value = "uuid") String uuid) {
 		return sItemService.getByUuid(uuid);

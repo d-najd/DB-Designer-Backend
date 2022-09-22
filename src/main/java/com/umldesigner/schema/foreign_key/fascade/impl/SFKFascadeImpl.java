@@ -19,11 +19,11 @@ public class SFKFascadeImpl implements SFKFascade {
     SItemService sItemService; // TODO find a way to get rid of this
 
     @Override
-    public boolean isValid(String uuid, String sUuid, SFKPojo pojo) {
-        log.debug("Execute isValid with parameters {}, {}, {}", uuid, sUuid, pojo);
+    public boolean isValid(String uuid, String refUuid, SFKPojo pojo) {
+        log.debug("Execute isValid with parameters {}, {}, {}", uuid, refUuid, pojo);
 
-        if (sameTableFKCheck(uuid, sUuid)) {
-            log.error("Foreign key links to the same table with parameters {}. {}. {}", uuid, sUuid, pojo);
+        if (sameTableFKCheck(uuid, refUuid)) {
+            log.error("Foreign key links to the same table with parameters {}. {}. {}", uuid, refUuid, pojo);
             throw new IllegalArgumentException("Foreign key links to the same table");
         }
 
@@ -33,22 +33,14 @@ public class SFKFascadeImpl implements SFKFascade {
                     "Invalid Argument entered for OnDelete or OnUpdate, available arguments are: No Action, REstrict, Cascade, Set Null, Set Default");
         }
 
-        if (!fkIdentityMatch(uuid, sUuid, pojo)) {
-            log.error(
-                //TODO retwrite this
-                    "Identity located in the {} and identity created using {}, {} don't match, create a identity using uuid and sUuid and set it",
-                    pojo, uuid, sUuid);
-            throw new InternalError("Misconfiguration on the server side");
-        }
-
         return true;
     }
 
     @Override
-    public boolean sameTableFKCheck(String fUuid, String sUuid) {
-        log.debug("Execute sameTableFKCheck with parameters {}, {}", fUuid, sUuid);
-        SItem firstItem = sItemService.findByUuid(fUuid);
-        SItem secondItem = sItemService.findByUuid(sUuid);
+    public boolean sameTableFKCheck(String uuid, String refUuid) {
+        log.debug("Execute sameTableFKCheck with parameters {}, {}", uuid, refUuid);
+        SItem firstItem = sItemService.findByUuid(uuid);
+        SItem secondItem = sItemService.findByUuid(refUuid);
 
         return firstItem.getTable().equals(secondItem.getTable());
     }

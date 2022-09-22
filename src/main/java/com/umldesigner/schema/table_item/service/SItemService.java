@@ -16,8 +16,6 @@ public interface SItemService {
 
     public SItem findByUuid(String uuid);
 
-    public SItemPojo getById(Integer id);
-    
     public SItemPojo getByUuid(String uuid);
 
     public List<SItemPojo> getAll();

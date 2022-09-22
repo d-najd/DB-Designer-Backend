@@ -53,7 +53,9 @@ public class SItemInfoServiceImpl implements SItemInfoService {
     @Override
     public List<SItemInfoPojo> getAll() {
         log.debug("Execute getAll");
+        itemInfoRepository.findAll();
 
+        log.debug("Executed rerere findAll");
         return itemInfoMapper.mapList(itemInfoRepository.findAll(), SItemInfoPojo.class);
     }
 
@@ -66,8 +68,9 @@ public class SItemInfoServiceImpl implements SItemInfoService {
 
     /**
      * @implSpec the current implementation uses hibernate for the insert statement,
-     * at the moment I don't know how to make the connection to wait executing and don't want
-     * to add any delays so I am returning null
+     *           at the moment I don't know how to make the connection to wait
+     *           executing and don't want
+     *           to add any delays so I am returning null
      * @return null
      */
     @Override
@@ -75,26 +78,31 @@ public class SItemInfoServiceImpl implements SItemInfoService {
         log.debug("Execute createSItemInfo with parameters {}, {}, {}", uuid, pojo, sfkUuid);
 
         final String query = "INSERT INTO s_item_info" +
-                " VALUES(?, ?, ?, ?, ?, ?, ?);";
+                " VALUES(?, ?, ?, ?, ?, ?);";
 
+            
         try (Connection connection = DriverManager.getConnection(WebConfiguration.dbLocation, WebConfiguration.dbUname,
                 WebConfiguration.dbPass);
-            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.closeOnCompletion();
-            preparedStatement.setLong(1, itemService.findByUuid(uuid).getId());
-            preparedStatement.setString(2, uuid);
-            preparedStatement.setBoolean(3, pojo.getPrimaryKey());
-            preparedStatement.setBoolean(4, pojo.getAllowNull());
-            preparedStatement.setBoolean(5, pojo.getUniqueKey());
-            preparedStatement.setBoolean(6, pojo.getAutoIncrement());
-            preparedStatement.setBoolean(7, pojo.getUnsigned());
+            preparedStatement.setString(1, uuid);
+            preparedStatement.setBoolean(2, pojo.getPrimaryKey());
+            preparedStatement.setBoolean(3, pojo.getAllowNull());
+            preparedStatement.setBoolean(4, pojo.getUniqueKey());
+            preparedStatement.setBoolean(5, pojo.getAutoIncrement());
+            preparedStatement.setBoolean(6, pojo.getUnsigned());
             preparedStatement.executeUpdate();
             return getByUuid(uuid);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+        
+
+        //pojo.setUuid(uuid);
+
+        //return itemInfoMapper.entityToDto(itemInfoRepository.save(itemInfoMapper.dtoToEntity(pojo)));
     }
 
     @Override

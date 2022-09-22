@@ -10,26 +10,26 @@ public interface SFKFascade {
 
     /**
      * @implSpec makes sure that the foreign key is valid
-     * @param uuid uuid of the first item
-     * @param itemUuid uuid of the second item
+     * @param uuid id of the main item (the one that is doing the reference)
+     * @param refUuid id of the secondary item (the one that is being referenced)
      * @param pojo  the pojo that is being checked
      * @return true if the given foreign key is valid
      * @see {@link #sameTableFKCheck(String, String)},
      *      {@link #validArgumentsCheck(SFKPojo)},
      *      {@link #fkIdentityMatch(String, String, SFKPojo)}
      */
-    public boolean isValid(String uuid, String itemUuid, SFKPojo pojo);
+    public boolean isValid(String uuid, String refUuid, SFKPojo pojo);
 
     /**
      * @implSpec checks whether the items are from the same table
      * 
-     * @param uuid id of the first item
-     * @param sUUid id of the second item
+     * @param uuid id of the main item (the one that is doing the reference)
+     * @param refUuid id of the secondary item (the one that is being referenced)
      * @return true if the given items belong to the same table
      * @implNote this should be moved to a SItemFascade if other components have need
      *          of this
      */
-    public boolean sameTableFKCheck(String uuid, String sUUid);
+    public boolean sameTableFKCheck(String uuid, String refUuid);
 
     /**
      * @implSpec checks whether the given given arguments about the foreign key are valid,

@@ -1,12 +1,17 @@
 package com.umldesigner.schema.table_item.domain;
 
+import java.io.Serializable;
+import java.util.UUID;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -44,8 +49,12 @@ import lombok.Setter;
 // name = "s_item_info",
 // pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid")
 // )
-public class SItem extends BaseEntity {
-    private static final long serialVersionUID = 1L;
+public class SItem implements Serializable {
+    private static final long serialVersionUID = 4L;
+
+    @Id
+    @Column(name = "uuid", updatable = false)
+    private String uuid;
 
     @JsonIgnore
     @ManyToOne(targetEntity = STable.class, fetch = FetchType.LAZY, optional = false)
@@ -78,4 +87,8 @@ public class SItem extends BaseEntity {
     @Column(name = "size")
     private Integer size = 0;
 
+    @PrePersist
+    public void init() {
+        uuid = UUID.randomUUID().toString();
+    }
 }

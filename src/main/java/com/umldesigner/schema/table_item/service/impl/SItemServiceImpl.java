@@ -60,17 +60,6 @@ public class SItemServiceImpl implements SItemService {
     }
 
     @Override
-    public SItemPojo getById(Integer id) {
-        log.debug("Execute findById with parameter {}", id);
-        SItem sItemEntity = sItemRepository.findById(id).orElseThrow(() -> {
-            log.error("Resource SchemaItem with id {} is not found", id);
-            return new ResourceNotFoundException("Resource SchemaItem not found");
-        });
-
-        return sItemMapper.entityToDto(sItemEntity);
-    }
-
-    @Override
     public SItemPojo getByUuid(String uuid) {
         log.debug("Execute getByUuid with parameter {}", uuid);
 

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class UmlObjectEntity extends BaseEntity {
+public abstract class UmlObjectEntity {
 
     @Column(name = "x")
     @NonNull

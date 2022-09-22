@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.umldesigner.schema.table_item.domain.SItem;
 
 @Repository
-public interface SItemRepository extends JpaRepository<SItem, Integer> {
+public interface SItemRepository extends JpaRepository<SItem, String> {
 
     public Optional<SItem> findByUuid(String uuid);
 

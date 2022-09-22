@@ -24,8 +24,10 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "s_table")
-public class STable extends UmlObjectEntity{
+public class STable extends UmlObjectEntity implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    // TODO FINISH THIS, UmlObjectEntity doesn't have uuid
 
     /*
      * <pre>

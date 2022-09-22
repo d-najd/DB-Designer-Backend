@@ -1,9 +1,12 @@
 package com.umldesigner.schema.foreign_key.domain;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -25,21 +28,24 @@ import lombok.Setter;
  * 
  * @implSpec to use an sfk first an item has to be created
  */
-public class SFK extends BaseEntity{
-    private static final long serialVersionUID = 3L;
+public class SFK implements Serializable {
+    private static final long serialVersionUID = 7L;
 
-    @Column(name = "tableUuid", updatable = false)
+    @Column(name = "uuid", updatable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private String tableUuid;
+    @Id
+    private String uuid;
+
+    @Column(name = "referencedUuid", updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private String referencedUuid;
 
     @NonNull
     @Column(name = "onUpdate", updatable = false, length = 2)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private String onUpdate = "ca";
 
     @NonNull
     @Column(name = "onDelete", updatable = false, length = 2)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private String onDelete = "ca";
 
 }

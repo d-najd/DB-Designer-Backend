@@ -2,7 +2,7 @@ package com.umldesigner.infrastructure.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6L;
 
     public ResourceNotFoundException() {
         super();

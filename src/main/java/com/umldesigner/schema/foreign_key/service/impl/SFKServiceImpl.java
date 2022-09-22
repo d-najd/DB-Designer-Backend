@@ -69,11 +69,12 @@ public class SFKServiceImpl implements SFKService {
     // don't point across multiple projects and realities
 
     @Override
-    public SFKPojo createForeignKey(String uuid, String itemUuid, SFKPojo pojo) {
-        log.debug("Execute createForeignKey with parameters {}. {}. {}", uuid, itemUuid, pojo);
+    public SFKPojo createForeignKey(String uuid, String refUuid, SFKPojo pojo) {
+        log.debug("Execute createForeignKey with parameters {}. {}. {}", uuid, refUuid, pojo);
 
-        pojo.setTableUuid(sItemService.getByUuid(uuid).getTableUuid_());
-        sfkFascade.isValid(uuid, itemUuid, pojo);
+        pojo.setUuid(uuid);
+        pojo.setReferencedUuid(refUuid);
+        sfkFascade.isValid(uuid, refUuid, pojo);
 
         SFK persistedSfk = sfkRepository.save(sfkMapper.dtoToEntity(pojo));
 
@@ -81,13 +82,15 @@ public class SFKServiceImpl implements SFKService {
     }
 
     @Override
-    public SFKPojo updateForeignKey(String uuid, String itemUuid, SFKPojo pojo) {
-        log.debug("Execute updateForeignKey with parameters {}, {}, {}", uuid, itemUuid, pojo);
+    public SFKPojo updateForeignKey(String uuid, SFKPojo pojo) {
+        log.debug("Execute updateForeignKey with parameters {}, {}", uuid, pojo);
+
+        pojo.setUuid(uuid);
+        SFK persistedSFK = findByUuid(uuid);
 
         //just in case something changes in future, unnecessary check atm
-        sfkFascade.isValid(uuid, itemUuid, pojo);
+        sfkFascade.isValid(uuid, persistedSFK.getReferencedUuid(), pojo);
 
-        SFK persistedSFK = findByUuid(uuid);
         sfkMapper.mapRequestedFieldForUpdate(persistedSFK, pojo);
 
         return sfkMapper.entityToDto(sfkRepository.saveAndFlush(persistedSFK));
@@ -95,7 +98,7 @@ public class SFKServiceImpl implements SFKService {
 
     @Override
     public void removeForeignKey(String uuid){
-        log.debug("Eecute removeForeignKey with parameters {}. {}", uuid);
+        log.debug("Execute removeForeignKey with parameters {}", uuid);
 
         sfkRepository.deleteById(uuid);
     }

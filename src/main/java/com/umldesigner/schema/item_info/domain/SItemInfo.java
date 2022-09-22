@@ -30,15 +30,12 @@ public class SItemInfo implements Serializable {
     private static final long serialVersionUID = 5L;
 
     @Id
-    @Column(name = "id")
-    private Long id;
-
     @Column(name = "uuid", updatable = false)
     private String uuid;
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "uuid")
     @JsonIgnore
     private SItem item;
 
