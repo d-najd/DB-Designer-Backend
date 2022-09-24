@@ -2,12 +2,15 @@ package com.umldesigner.schema.table.domain;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -27,7 +30,9 @@ import lombok.Setter;
 public class STable extends UmlObjectEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // TODO FINISH THIS, UmlObjectEntity doesn't have uuid
+    @Id
+    @Column(name = "uuid", updatable = false)
+    private String uuid;
 
     /*
      * <pre>
@@ -50,4 +55,10 @@ public class STable extends UmlObjectEntity implements Serializable {
     @NonNull
     @Column(name = "title")
     private String title;
+
+    @PrePersist
+    public void init() {
+        uuid = UUID.randomUUID().toString();
+    }
+
 }

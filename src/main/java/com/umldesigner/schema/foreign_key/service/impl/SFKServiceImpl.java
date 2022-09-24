@@ -7,17 +7,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.umldesigner.infrastructure.domain.identities.BaseMIdentity;
 import com.umldesigner.infrastructure.exception.ResourceNotFoundException;
 import com.umldesigner.schema.foreign_key.domain.SFK;
 import com.umldesigner.schema.foreign_key.fascade.SFKFascade;
 import com.umldesigner.schema.foreign_key.mapper.SFKMapper;
 import com.umldesigner.schema.foreign_key.repository.SFKRepository;
 import com.umldesigner.schema.foreign_key.service.SFKService;
-import com.umldesigner.schema.table.api.STableController;
-import com.umldesigner.schema.table_item.api.SItemController;
 import com.umldesigner.schema.table_item.service.SItemService;
-import com.umldesigner.submodules.UmlDesignerShared.infrastructure.pojo.identities.BaseMIdentityPojo;
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -102,6 +98,5 @@ public class SFKServiceImpl implements SFKService {
 
         sfkRepository.deleteById(uuid);
     }
-
 
 }

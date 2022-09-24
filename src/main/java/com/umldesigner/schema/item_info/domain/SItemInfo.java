@@ -2,6 +2,7 @@ package com.umldesigner.schema.item_info.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "s_item_info")
+
 public class SItemInfo implements Serializable {
     private static final long serialVersionUID = 5L;
 
@@ -33,7 +35,7 @@ public class SItemInfo implements Serializable {
     @Column(name = "uuid", updatable = false)
     private String uuid;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "uuid")
     @JsonIgnore
@@ -55,8 +57,9 @@ public class SItemInfo implements Serializable {
     @Column(name = "autoIncrement")
     private Boolean autoIncrement;
 
+    // naming the field "unsigned" causes errors
     @NonNull
-    @Column(name = "unsigned")
+    @Column(name = "unsigned_")
     private Boolean unsigned;
 
     // @NonNull

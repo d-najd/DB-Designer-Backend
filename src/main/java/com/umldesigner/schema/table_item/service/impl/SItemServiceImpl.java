@@ -1,6 +1,5 @@
 package com.umldesigner.schema.table_item.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.umldesigner.infrastructure.exception.ResourceNotFoundException;
+import com.umldesigner.schema.item_info.domain.SItemInfo;
+import com.umldesigner.schema.item_info.mapper.SItemInfoMapper;
 import com.umldesigner.schema.table.domain.STable;
-import com.umldesigner.schema.table.service.STableService;
 import com.umldesigner.schema.table_item.domain.SItem;
 import com.umldesigner.schema.table_item.logic.SItemLogic;
 import com.umldesigner.schema.table_item.mapper.SItemMapper;
@@ -35,9 +35,8 @@ public class SItemServiceImpl implements SItemService {
     @Autowired
     SItemLogic sItemLogic;
 
-    @Autowired // TODO get rid of the dependency
-               // https://stackoverflow.com/questions/27930449/jpa-many-to-one-relation-need-to-save-only-id
-    STableService sTableService;
+    @Autowired
+    SItemInfoMapper itemInfoMapper;
 
     @Override
     public SItem findByTableUuidAndUuid(String tUuid, String uuid) {
@@ -88,19 +87,25 @@ public class SItemServiceImpl implements SItemService {
     @Override
     public SItemPojo createSchemaItem(String tUuid, SItemPojo sItemPojo, Integer position) {
         log.debug("Execute createSchemaItem parameters {}, {}", tUuid, sItemPojo);
-        SItem transientSchemaItem = sItemMapper.dtoToEntity(sItemPojo);
-        STable sTable = sTableService.findByUuid(tUuid);
+        SItem transientSItem = sItemMapper.dtoToEntity(sItemPojo);
 
-        transientSchemaItem.setTable(sTable);
+        // setting table
+        STable sTable = new STable();
+        sTable.setUuid(tUuid);
+        transientSItem.setTable(sTable);
 
-        // transientSchemaItem.setTableUuid_(tUuid);
+        // setting the to the item info
+        SItemInfo itemInfo = transientSItem.getItemInfo();
+        if (itemInfo != null) {
+            itemInfo.setItem(transientSItem);
+        }
 
-        // sets the position to a given position if not null if not uses the method
-        // given below
-        transientSchemaItem
-                .setPosition(position != null ? position : sItemLogic.getNextPosition(sTable.getItems()));
-        log.debug("test");
-        SItem persistedSItem = sItemRepository.save(transientSchemaItem);
+        // sets the position to a given position if not null else uses the method
+        // defined in the method below
+        transientSItem
+                .setPosition(position != null ? position
+                        : sItemLogic.getNextPosition(sItemRepository.findAllByTableUuid(tUuid)));
+        SItem persistedSItem = sItemRepository.save(transientSItem);
 
         return sItemMapper.entityToDto(persistedSItem);
     }
@@ -109,16 +114,18 @@ public class SItemServiceImpl implements SItemService {
     public List<SItemPojo> createSchemaItemList(String tUuid, List<SItemPojo> sItemPojoList) {
         log.debug("Execute createSchemaItemList with parameters {}, {}", tUuid, sItemPojoList);
 
-        STable sTable = sTableService.findByUuid(tUuid);
-        Integer curBiggestPos = sItemLogic.getNextPosition(sTable.getItems());
-        List<SItemPojo> returnList = new ArrayList<>();
-        for (Integer i = 0; i < sItemPojoList.size(); i++) {
-            returnList.add(createSchemaItem(tUuid, sItemPojoList.get(i), i +
-                    curBiggestPos));
-        }
-
-        return returnList;
-
+        throw new UnsupportedOperationException();
+        /*
+         * Integer curBiggestPos =
+         * sItemLogic.getNextPosition(sItemRepository.findAllByTableUuid(tUuid));
+         * List<SItemPojo> returnList = new ArrayList<>();
+         * for (Integer i = 0; i < sItemPojoList.size(); i++) {
+         * returnList.add(createSchemaItem(tUuid, sItemPojoList.get(i), i +
+         * curBiggestPos));
+         * }
+         * 
+         * return returnList;
+         */
     }
 
     @Override

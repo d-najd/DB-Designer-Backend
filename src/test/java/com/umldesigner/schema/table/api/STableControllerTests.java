@@ -38,11 +38,9 @@ import com.umldesigner.schema.table.repository.STableRepository;
 import com.umldesigner.schema.table.utils.table.STableTestUtil;
 import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=none")
 @AutoConfigureMockMvc
-@Slf4j
 // @AutoConfigureTestDatabase(replace = Replace.NONE)
 
 // NOTE I am aware that I am technically testing both the service and the
@@ -167,7 +165,6 @@ public class STableControllerTests {
     public void updateSTable() {
         String mockUuid = "mockUUID";
         STablePojo mock = STableTestUtil.createMockTablePojo();
-        STablePojo updatedMock = STableTestUtil.createMockTablePojo();
 
         // when(this.sTableService.updateSchemaTable(mockUuid,
         // mock)).thenReturn(updatedMock);

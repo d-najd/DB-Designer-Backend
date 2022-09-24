@@ -1,20 +1,15 @@
 package com.umldesigner.schema.foreign_key.domain;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
-
-import com.umldesigner.infrastructure.domain.entities.BaseEntity;
-import com.umldesigner.infrastructure.domain.entities.BaseMEntity;
 
 import lombok.Getter;
 import lombok.Setter;

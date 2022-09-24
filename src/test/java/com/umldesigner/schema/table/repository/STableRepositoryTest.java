@@ -19,11 +19,9 @@ import com.umldesigner.schema.table.domain.STable;
 import com.umldesigner.schema.table.utils.table.STableTestUtil;
 import com.umldesigner.schema.table_item.domain.SItem;
 
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @Transactional
-@Slf4j
 class STableRepositoryTest {
 
     @Autowired

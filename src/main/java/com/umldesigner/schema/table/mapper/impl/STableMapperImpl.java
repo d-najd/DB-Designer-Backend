@@ -13,9 +13,6 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 @Component
 public class STableMapperImpl extends AbstractGeneralMapper implements STableMapper {
 
-    @Autowired
-    SItemMapper sItemMapper;
-
     public STableMapperImpl(ModelMapper modelMapper) {
         super(modelMapper);
     }
@@ -38,14 +35,5 @@ public class STableMapperImpl extends AbstractGeneralMapper implements STableMap
         // automatically
         entity.setX(dto.getX());
         entity.setY(dto.getY());
-
-        /* 
-        List<SItemPojo> e = dto.getItems();
-        List<SItem> te = new ArrayList<>();
-        for (SItemPojo pojo : e) {
-            te.add(sItemMapper.dtoToEntity(pojo));
-        }
-        entity.setItems(te);
-        */
     }
 }

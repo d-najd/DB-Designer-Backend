@@ -19,10 +19,6 @@ import com.umldesigner.schema.foreign_key.service.SFKService;
 
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 @RequestMapping(Endpoints.ITEM_FK)
 public class SFKController {

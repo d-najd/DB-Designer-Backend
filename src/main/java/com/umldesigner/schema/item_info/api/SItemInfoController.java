@@ -17,9 +17,6 @@ import com.umldesigner.infrastructure.Endpoints;
 import com.umldesigner.schema.item_info.service.SItemInfoService;
 import com.umldesigner.submodules.UmlDesignerShared.schema.item_info.SItemInfoPojo;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 @RequestMapping(Endpoints.ITEM_INFO)
 public class SItemInfoController {

@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.umldesigner.schema.table.domain.STable;
 
 @Repository
-public interface STableRepository extends JpaRepository<STable, Integer> {
+public interface STableRepository extends JpaRepository<STable, String> {
 	public Optional<STable> findByUuid(String uuid);
 }

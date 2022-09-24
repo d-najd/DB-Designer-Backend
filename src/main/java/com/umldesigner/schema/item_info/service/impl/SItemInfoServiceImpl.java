@@ -1,9 +1,5 @@
 package com.umldesigner.schema.item_info.service.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,14 +7,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.umldesigner.infrastructure.WebConfiguration;
 import com.umldesigner.infrastructure.exception.ResourceNotFoundException;
 import com.umldesigner.schema.foreign_key.service.SFKService;
 import com.umldesigner.schema.item_info.domain.SItemInfo;
 import com.umldesigner.schema.item_info.mapper.SItemInfoMapper;
 import com.umldesigner.schema.item_info.repository.SItemInfoRepository;
 import com.umldesigner.schema.item_info.service.SItemInfoService;
-import com.umldesigner.schema.table_item.service.SItemService;
+import com.umldesigner.schema.table_item.domain.SItem;
 import com.umldesigner.submodules.UmlDesignerShared.schema.item_info.SItemInfoPojo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 @Transactional
+
 public class SItemInfoServiceImpl implements SItemInfoService {
 
     @Autowired
     SItemInfoRepository itemInfoRepository;
-
-    @Autowired
-    SItemService itemService;
-
-    @Autowired
-    SFKService sfkService;
 
     @Autowired
     SItemInfoMapper itemInfoMapper;
@@ -77,37 +67,20 @@ public class SItemInfoServiceImpl implements SItemInfoService {
     public SItemInfoPojo createSItemInfo(String uuid, SItemInfoPojo pojo, String sfkUuid) {
         log.debug("Execute createSItemInfo with parameters {}, {}, {}", uuid, pojo, sfkUuid);
 
-        final String query = "INSERT INTO s_item_info" +
-                " VALUES(?, ?, ?, ?, ?, ?);";
+        pojo.setUuid(uuid);
+        SItemInfo entityItemInfo = itemInfoMapper.dtoToEntity(pojo);
+        SItem item = new SItem();
+        item.setUuid(uuid);
+        entityItemInfo.setItem(item);
+        SItemInfo persistedItemInfo = itemInfoRepository.save(entityItemInfo);
 
-            
-        try (Connection connection = DriverManager.getConnection(WebConfiguration.dbLocation, WebConfiguration.dbUname,
-                WebConfiguration.dbPass);
-                PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.closeOnCompletion();
-            preparedStatement.setString(1, uuid);
-            preparedStatement.setBoolean(2, pojo.getPrimaryKey());
-            preparedStatement.setBoolean(3, pojo.getAllowNull());
-            preparedStatement.setBoolean(4, pojo.getUniqueKey());
-            preparedStatement.setBoolean(5, pojo.getAutoIncrement());
-            preparedStatement.setBoolean(6, pojo.getUnsigned());
-            preparedStatement.executeUpdate();
-            return getByUuid(uuid);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-        
-
-        //pojo.setUuid(uuid);
-
-        //return itemInfoMapper.entityToDto(itemInfoRepository.save(itemInfoMapper.dtoToEntity(pojo)));
+        return itemInfoMapper.entityToDto(persistedItemInfo);
     }
 
     @Override
     public SItemInfoPojo updateSItemInfo(String uuid, SItemInfoPojo pojo) {
-        // TODO Auto-generated method stub
+        log.debug("Execute createSItemInfo with parameters {}, {}", uuid, pojo);
+
         return null;
     }
 

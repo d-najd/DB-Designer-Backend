@@ -26,12 +26,6 @@ public class STableController {
     @Autowired
     STableService sTableService;
 
-    // this should be removed in the future for security reasons
-    @GetMapping("/id/{id}")
-    public STablePojo getById(@PathVariable(value = "id") Integer id) {
-        return sTableService.findById(id);
-    }
-
     @GetMapping("/{uuid}")
     @ResponseBody
     public STablePojo getByUuid(@PathVariable(value = "uuid") String uuid) {

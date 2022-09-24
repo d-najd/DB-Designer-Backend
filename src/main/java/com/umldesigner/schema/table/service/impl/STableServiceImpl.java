@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.umldesigner.infrastructure.exception.ResourceNotFoundException;
+import com.umldesigner.schema.item_info.domain.SItemInfo;
 import com.umldesigner.schema.table.domain.STable;
 import com.umldesigner.schema.table.mapper.STableMapper;
 import com.umldesigner.schema.table.repository.STableRepository;
@@ -27,17 +28,6 @@ public class STableServiceImpl implements STableService {
 
     @Autowired
     STableMapper sTableMapper;
-
-    @Override
-    public STablePojo findById(Integer id) {
-        log.debug("Execute findById with parameter {}", id);
-        STable schemaTableEntity = sTableRepository.findById(id).orElseThrow(() -> {
-            log.error("Resource SchemaTable with id {} is not found", id);
-            return new ResourceNotFoundException("Resource SchemaTable not found");
-        });
-
-        return sTableMapper.entityToDto(schemaTableEntity);
-    }
 
     @Override
     public STablePojo getByUuid(String uuid) {
@@ -68,21 +58,19 @@ public class STableServiceImpl implements STableService {
         log.debug("Execute createSchemaTable with parameters {}", sTablePojo);
         STable transientSTable = sTableMapper.dtoToEntity(sTablePojo);
 
-        // saving the table without the items
+        // getting a reference to the items
         List<SItem> items = transientSTable.getItems();
-        transientSTable.setItems(null);
-        STable persistentSTable = sTableRepository.save(transientSTable);
 
-        // setting the table to the items since they need it to be created and saving
-        // them both
-        // NOTE this is probably a terrible way of doing things need to find "more
-        // elegant" way later
         for (int i = 0; i < items.size(); i++) {
             items.get(i).setPosition(i);
-            items.get(i).setTable(persistentSTable);
+            items.get(i).setTable(transientSTable);
+            SItemInfo info = items.get(i).getItemInfo();
+            if (info != null) {
+                info.setItem(items.get(i));
+            }
         }
-        persistentSTable.setItems(items);
-        persistentSTable = sTableRepository.save(transientSTable);
+
+        STable persistentSTable = sTableRepository.save(transientSTable);
 
         return sTableMapper.entityToDto(persistentSTable);
     }
@@ -95,6 +83,7 @@ public class STableServiceImpl implements STableService {
     public STablePojo updateSchemaTable(String uuid, STablePojo sTablePojo) {
         log.debug("Execute updateSchemaTable with parameters {}, {}", uuid, sTablePojo);
         STable persistentSTable = findByUuid(uuid);
+
         sTableMapper.mapRequestedFieldForUpdate(persistentSTable, sTablePojo);
 
         return sTableMapper.entityToDto(sTableRepository.saveAndFlush(persistentSTable));

@@ -4,9 +4,7 @@ package com.umldesigner.infrastructure;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class QueryConstructor {
 	private static final String dbPass = WebConfiguration.dbPass;
 	
 	public static void sendQuery (String query) throws SQLException {
-        ArrayList<String> queries = new ArrayList<String>(List.of(query));
+        List<String> queries = new ArrayList<String>(List.of(query));
         try {
         	sendQuery(queries);
         } catch (SQLException e){
@@ -24,7 +22,7 @@ public class QueryConstructor {
         }
 	}
 	
-	public static void sendQuery (ArrayList<String> queries) throws SQLException{
+	public static void sendQuery (List<String> queries) throws SQLException{
     	for (String query : queries) {
     		try (Connection connection = DriverManager.getConnection(dbLocation, dbUname, dbPass);
     		PreparedStatement preparedStatement = connection.prepareStatement(query)) {

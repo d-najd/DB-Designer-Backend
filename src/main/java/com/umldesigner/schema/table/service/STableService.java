@@ -10,8 +10,6 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 @Service
 public interface STableService {
 
-    public STablePojo findById(Integer id);
-
     public STablePojo getByUuid(String uuid);
 
     public STable findByUuid(String uuid);

@@ -19,12 +19,10 @@ import com.umldesigner.schema.table.repository.STableRepository;
 import com.umldesigner.schema.table.utils.table.STableTestUtil;
 import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 
-import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=none")
 @AutoConfigureMockMvc
 @Transactional
-@Slf4j
 public class STableServiceTest {
     @Autowired
     protected MockMvc mockMvc;

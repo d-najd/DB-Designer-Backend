@@ -13,21 +13,21 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.item_info.SItemInfoPo
 public class SItemInfoMapperImpl extends AbstractGeneralMapper implements SItemInfoMapper {
 
     @Autowired
-    public SItemInfoMapperImpl(ModelMapper modelMapper){
+    public SItemInfoMapperImpl(ModelMapper modelMapper) {
         super(modelMapper);
     }
 
     @Override
-    public SItemInfoPojo entityToDto(SItemInfo entity){
+    public SItemInfoPojo entityToDto(SItemInfo entity) {
         return this.modelMapper.map(entity, SItemInfoPojo.class);
     }
 
     @Override
-    public SItemInfo dtoToEntity(SItemInfoPojo pojo){
+    public SItemInfo dtoToEntity(SItemInfoPojo pojo) {
         return this.modelMapper.map(pojo, SItemInfo.class);
     }
 
-    public void mapRequestedFieldForUpdate(SItemInfo entity, SItemInfoPojo dto){
+    public void mapRequestedFieldForUpdate(SItemInfo entity, SItemInfoPojo dto) {
         entity.setAllowNull(dto.getAllowNull());
         entity.setAutoIncrement(dto.getAutoIncrement());
         // entity.setForeignKey(dto.getForeignKey()); this should be set somewhere else
