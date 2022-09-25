@@ -75,7 +75,7 @@ public class STableServiceImpl implements STableService {
             } else {
                 // one liner doesnt work for some reason
                 info = new SItemInfo();
-                info.setItem(curItem);<tab>
+                info.setItem(curItem);
                 curItem.setItemInfo(info);
             }
             log.debug("attempting to save, {}", itemInfoMapper.entityToDto(info));
