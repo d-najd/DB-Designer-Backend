@@ -75,6 +75,7 @@ public class SFKServiceImpl implements SFKService {
 
         // setting up the transient values
         transientSItemInfo.setUuid(uuid);
+        transientSItemInfo.setForeignKey(transientSFK);
 
         transientSFK.setUuid(uuid);
         transientSFK.setReferencedUuid(refUuid);

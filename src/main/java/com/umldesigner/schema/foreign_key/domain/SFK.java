@@ -33,8 +33,7 @@ import lombok.Setter;
 public class SFK implements Serializable {
     private static final long serialVersionUID = 7L;
 
-    public SFK(SItemInfo itemInfo) {
-        this.itemInfo = itemInfo;
+    public SFK() {
         this.onUpdate = "na";
         this.onDelete = "na";
     }

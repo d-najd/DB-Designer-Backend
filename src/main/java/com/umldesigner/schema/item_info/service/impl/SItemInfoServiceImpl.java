@@ -64,8 +64,8 @@ public class SItemInfoServiceImpl implements SItemInfoService {
      * @return null
      */
     @Override
-    public SItemInfoPojo createSItemInfo(String uuid, SItemInfoPojo pojo, String sfkUuid) {
-        log.debug("Execute createSItemInfo with parameters {}, {}, {}", uuid, pojo, sfkUuid);
+    public SItemInfoPojo createSItemInfo(String uuid, SItemInfoPojo pojo) {
+        log.debug("Execute createSItemInfo with parameters {}, {}", uuid, pojo);
 
         pojo.setUuid(uuid);
         SItemInfo entityItemInfo = itemInfoMapper.dtoToEntity(pojo);
