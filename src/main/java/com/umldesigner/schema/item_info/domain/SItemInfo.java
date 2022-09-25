@@ -1,6 +1,7 @@
 package com.umldesigner.schema.item_info.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,10 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -67,7 +71,7 @@ public class SItemInfo implements Serializable {
     @Column(name = "autoIncrement")
     private Boolean autoIncrement;
 
-    // naming the field "unsigned" causes errors
+    // naming the field "unsigned" causes errors so "unsinged_" is used
     @NonNull
     @Column(name = "unsigned_")
     private Boolean unsigned;
@@ -75,5 +79,9 @@ public class SItemInfo implements Serializable {
     @OneToOne(mappedBy = "itemInfo", cascade = CascadeType.ALL, optional = true)
     @PrimaryKeyJoinColumn
     private SFK foreignKey;
+
+    @OneToMany(mappedBy = "referencedItemInfo", cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<SFK> referencedForeignKeys;
 
 }

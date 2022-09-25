@@ -5,8 +5,10 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -60,5 +62,12 @@ public class SFK implements Serializable {
     @JoinColumn(name = "uuid")
     @JsonIgnore
     private SItemInfo itemInfo;
+
+    @JsonIgnore
+    @ManyToOne(targetEntity = SItemInfo.class, fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NonNull
+    @JoinColumn(name = "referencedUuid", referencedColumnName = "uuid", updatable = false, insertable = false)
+    private SItemInfo referencedItemInfo;
 
 }

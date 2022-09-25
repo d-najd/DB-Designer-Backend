@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.umldesigner.infrastructure.Endpoints;
 import com.umldesigner.schema.foreign_key.service.SFKService;
-
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
 @RestController
@@ -53,10 +52,10 @@ public class SFKController {
         return sfkService.updateForeignKey(uuid, requestSfkPojo);
     }
 
-    @DeleteMapping("/{fUuid}")
+    @DeleteMapping("/{uuid}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void removeSchemaForeignKey(
             @PathVariable(value = "uuid") String uuid) {
-                sfkService.removeForeignKey(uuid);
-            }
+        sfkService.removeForeignKey(uuid);
+    }
 }

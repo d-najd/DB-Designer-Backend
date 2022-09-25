@@ -14,6 +14,7 @@ import com.umldesigner.schema.foreign_key.mapper.SFKMapper;
 import com.umldesigner.schema.foreign_key.repository.SFKRepository;
 import com.umldesigner.schema.foreign_key.service.SFKService;
 import com.umldesigner.schema.item_info.domain.SItemInfo;
+import com.umldesigner.schema.table_item.mapper.SItemMapper;
 import com.umldesigner.schema.table_item.service.SItemService;
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
@@ -28,13 +29,16 @@ public class SFKServiceImpl implements SFKService {
     SFKRepository sfkRepository;
 
     @Autowired
-    SItemService sItemService;
-
-    @Autowired
     SFKMapper sfkMapper;
 
     @Autowired
     SFKFascade sfkFascade;
+
+    @Autowired
+    SItemMapper itemMapper;
+
+    @Autowired
+    SItemService sItemService;
 
     @Override
     public SFK findByUuid(String uuid) {
@@ -84,7 +88,7 @@ public class SFKServiceImpl implements SFKService {
         // validity check and saving
         sfkFascade.isValid(uuid, refUuid, pojo);
 
-        SFK persistedSfk = sfkRepository.save(sfkMapper.dtoToEntity(pojo));
+        SFK persistedSfk = sfkRepository.save(transientSFK);
         return sfkMapper.entityToDto(persistedSfk);
     }
 
