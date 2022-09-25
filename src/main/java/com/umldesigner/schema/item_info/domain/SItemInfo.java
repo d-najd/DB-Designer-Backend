@@ -9,11 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.umldesigner.schema.foreign_key.domain.SFK;
 import com.umldesigner.schema.table_item.domain.SItem;
 
 import lombok.Getter;
@@ -31,13 +33,21 @@ import lombok.Setter;
 public class SItemInfo implements Serializable {
     private static final long serialVersionUID = 5L;
 
+    public SItemInfo() {
+        this.primaryKey = false;
+        this.allowNull = false;
+        this.uniqueKey = false;
+        this.autoIncrement = false;
+        this.unsigned = false;
+    }
+
     @Id
     @Column(name = "uuid", updatable = false)
     private String uuid;
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "uuid")
+    @JoinColumn(name = "uuid", updatable = false)
     @JsonIgnore
     private SItem item;
 
@@ -62,8 +72,8 @@ public class SItemInfo implements Serializable {
     @Column(name = "unsigned_")
     private Boolean unsigned;
 
-    // @NonNull
-    // @Column(name = "foreignKey")
-    // private SFK foreignKey;
+    @OneToOne(mappedBy = "itemInfo", cascade = CascadeType.ALL, optional = true)
+    @PrimaryKeyJoinColumn
+    private SFK foreignKey;
 
 }

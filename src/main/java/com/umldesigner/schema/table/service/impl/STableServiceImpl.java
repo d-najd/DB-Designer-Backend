@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.umldesigner.infrastructure.exception.ResourceNotFoundException;
 import com.umldesigner.schema.item_info.domain.SItemInfo;
+import com.umldesigner.schema.item_info.mapper.SItemInfoMapper;
 import com.umldesigner.schema.table.domain.STable;
 import com.umldesigner.schema.table.mapper.STableMapper;
 import com.umldesigner.schema.table.repository.STableRepository;
@@ -28,6 +29,9 @@ public class STableServiceImpl implements STableService {
 
     @Autowired
     STableMapper sTableMapper;
+
+    @Autowired
+    SItemInfoMapper itemInfoMapper;
 
     @Override
     public STablePojo getByUuid(String uuid) {
@@ -62,12 +66,19 @@ public class STableServiceImpl implements STableService {
         List<SItem> items = transientSTable.getItems();
 
         for (int i = 0; i < items.size(); i++) {
-            items.get(i).setPosition(i);
-            items.get(i).setTable(transientSTable);
-            SItemInfo info = items.get(i).getItemInfo();
+            SItem curItem = items.get(i);
+            curItem.setPosition(i);
+            curItem.setTable(transientSTable);
+            SItemInfo info = curItem.getItemInfo();
             if (info != null) {
-                info.setItem(items.get(i));
+                info.setItem(curItem);
+            } else {
+                // one liner doesnt work for some reason
+                info = new SItemInfo();
+                info.setItem(curItem);<tab>
+                curItem.setItemInfo(info);
             }
+            log.debug("attempting to save, {}", itemInfoMapper.entityToDto(info));
         }
 
         STable persistentSTable = sTableRepository.save(transientSTable);

@@ -16,12 +16,10 @@ public interface SFKService {
     public SFKPojo getByUuid(String fUuid);
 
     /**
-     * creates foreign key between s_item values
+     * creates foreign key between s_item values from different tables
      * 
      * @param uuid id of the main item (the one that is doing the reference)
      * @param refUuid id of the secondary item (the one that is being referenced)
-     * @param pojo  the identity from the pojo is not used
-     * @return pojo of the created foreign key
      */
     public SFKPojo createForeignKey(String uuid, String refUuid, SFKPojo pojo);
 

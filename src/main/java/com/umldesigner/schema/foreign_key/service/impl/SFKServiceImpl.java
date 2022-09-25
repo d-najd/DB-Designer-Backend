@@ -13,6 +13,7 @@ import com.umldesigner.schema.foreign_key.fascade.SFKFascade;
 import com.umldesigner.schema.foreign_key.mapper.SFKMapper;
 import com.umldesigner.schema.foreign_key.repository.SFKRepository;
 import com.umldesigner.schema.foreign_key.service.SFKService;
+import com.umldesigner.schema.item_info.domain.SItemInfo;
 import com.umldesigner.schema.table_item.service.SItemService;
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
@@ -66,14 +67,23 @@ public class SFKServiceImpl implements SFKService {
 
     @Override
     public SFKPojo createForeignKey(String uuid, String refUuid, SFKPojo pojo) {
-        log.debug("Execute createForeignKey with parameters {}. {}. {}", uuid, refUuid, pojo);
+        log.debug("Execute createForeignKey with parameters {}, {}, {}", uuid, refUuid, pojo);
 
-        pojo.setUuid(uuid);
-        pojo.setReferencedUuid(refUuid);
+        // getting transient values
+        SFK transientSFK = sfkMapper.dtoToEntity(pojo);
+        SItemInfo transientSItemInfo = new SItemInfo();
+
+        // setting up the transient values
+        transientSItemInfo.setUuid(uuid);
+
+        transientSFK.setUuid(uuid);
+        transientSFK.setReferencedUuid(refUuid);
+        transientSFK.setItemInfo(transientSItemInfo);
+
+        // validity check and saving
         sfkFascade.isValid(uuid, refUuid, pojo);
 
         SFK persistedSfk = sfkRepository.save(sfkMapper.dtoToEntity(pojo));
-
         return sfkMapper.entityToDto(persistedSfk);
     }
 
@@ -83,8 +93,9 @@ public class SFKServiceImpl implements SFKService {
 
         pojo.setUuid(uuid);
         SFK persistedSFK = findByUuid(uuid);
+        pojo.setReferencedUuid(persistedSFK.getReferencedUuid());
 
-        //just in case something changes in future, unnecessary check atm
+        // just in case something changes in future, unnecessary check atm
         sfkFascade.isValid(uuid, persistedSFK.getReferencedUuid(), pojo);
 
         sfkMapper.mapRequestedFieldForUpdate(persistedSFK, pojo);
@@ -93,7 +104,7 @@ public class SFKServiceImpl implements SFKService {
     }
 
     @Override
-    public void removeForeignKey(String uuid){
+    public void removeForeignKey(String uuid) {
         log.debug("Execute removeForeignKey with parameters {}", uuid);
 
         sfkRepository.deleteById(uuid);

@@ -16,7 +16,6 @@ public interface SFKFascade {
      * @return true if the given foreign key is valid
      * @see {@link #sameTableFKCheck(String, String)},
      *      {@link #validArgumentsCheck(SFKPojo)},
-     *      {@link #fkIdentityMatch(String, String, SFKPojo)}
      */
     public boolean isValid(String uuid, String refUuid, SFKPojo pojo);
 

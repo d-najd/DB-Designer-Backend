@@ -15,22 +15,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Configuration
 public class ApplicationConfig {
 
-	@PostConstruct
-	public void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
+    @PostConstruct
+    public void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
-	@Bean
-	public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
-		return builder
-				.createXmlMapper(false)
-				.serializationInclusion(Include.NON_NULL)
-				.build();
-	}
-
+    @Bean
+    public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
+        return builder
+                .createXmlMapper(false)
+                .serializationInclusion(Include.NON_NULL)
+                .build();
+    }
 }

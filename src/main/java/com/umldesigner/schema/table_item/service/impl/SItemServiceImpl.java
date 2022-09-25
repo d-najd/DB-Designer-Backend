@@ -98,6 +98,10 @@ public class SItemServiceImpl implements SItemService {
         SItemInfo itemInfo = transientSItem.getItemInfo();
         if (itemInfo != null) {
             itemInfo.setItem(transientSItem);
+        } else {
+            itemInfo = new SItemInfo();
+            itemInfo.setItem(transientSItem);
+            transientSItem.setItemInfo(itemInfo);
         }
 
         // sets the position to a given position if not null else uses the method
