@@ -32,20 +32,17 @@ public class STableController {
         return sTableService.getByUuid(uuid);
     }
 
-    @GetMapping("/test/")
-    public String getTest() {
-        return "hello";
-    }
-
     @GetMapping
     public List<STablePojo> getAll() {
         return sTableService.getAll();
     }
 
-    @PostMapping
+    @PostMapping(Endpoints.PROJECT_RAW + "/{projectUuid}")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public STablePojo createSchemaTable(@RequestBody STablePojo requestSTablePojo) {
-        return sTableService.createSchemaTable(requestSTablePojo);
+    public STablePojo createSchemaTable(
+            @PathVariable(value = "projectUuid") String projectUuid,
+            @RequestBody STablePojo requestSTablePojo) {
+        return sTableService.createSchemaTable(projectUuid, requestSTablePojo);
     }
 
     @PutMapping("/{uuid}")

@@ -51,12 +51,12 @@ public class SFK implements Serializable {
     private String referencedUuid;
 
     @NonNull
-    @Column(name = "onUpdate", length = 2, nullable = false)
-    private String onUpdate;
-
-    @NonNull
     @Column(name = "onDelete", length = 2, nullable = false)
     private String onDelete;
+
+    @NonNull
+    @Column(name = "onUpdate", length = 2, nullable = false)
+    private String onUpdate;
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId

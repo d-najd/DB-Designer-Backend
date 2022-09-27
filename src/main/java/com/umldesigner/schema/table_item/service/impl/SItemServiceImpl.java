@@ -1,7 +1,6 @@
 package com.umldesigner.schema.table_item.service.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -133,22 +132,6 @@ public class SItemServiceImpl implements SItemService {
     }
 
     @Override
-    public Set<SItemPojo> createSchemaItemSet(String tUuid, Set<SItemPojo> sItemPojoSet) {
-        /*
-         * log.debug("Execute createSchemaItemSet with parameters {}, {}", tUuid,
-         * sItemPojoSet);
-         * Set<SchemaItemPojo> returnSet = new HashSet<>();
-         * for (SchemaItemPojo sItemPojo : sItemPojoSet) {
-         * returnSet.add(createSchemaItem(tUuid, sItemPojo));
-         * }
-         * 
-         * return returnSet;
-         */
-        throw new UnsupportedOperationException(
-                "if you want to use this implement the iterator design pattern for this and createSchemaItemList and abstract the common stuff");
-    }
-
-    @Override
     public SItemPojo updateSchemaItem(String uuid, SItemPojo sItemPojo) {
         log.debug("Execute updateSchemaItem with parameters {}, {}", uuid, sItemPojo);
         SItem persistedSItem = findByUuid(uuid);
@@ -177,7 +160,6 @@ public class SItemServiceImpl implements SItemService {
     @Override
     public void removeSchemaItem(String uuid) {
         log.debug("Execute removeSchemaItem with parameter {}", uuid);
-        SItem persistedSItem = findByUuid(uuid);
-        sItemRepository.delete(persistedSItem);
+        sItemRepository.deleteById(uuid);
     }
 }

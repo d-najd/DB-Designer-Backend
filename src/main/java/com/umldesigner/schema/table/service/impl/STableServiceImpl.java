@@ -15,6 +15,7 @@ import com.umldesigner.schema.table.mapper.STableMapper;
 import com.umldesigner.schema.table.repository.STableRepository;
 import com.umldesigner.schema.table.service.STableService;
 import com.umldesigner.schema.table_item.domain.SItem;
+import com.umldesigner.schema.user_project.domain.UserProject;
 import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -58,13 +59,19 @@ public class STableServiceImpl implements STableService {
     }
 
     @Override
-    public STablePojo createSchemaTable(STablePojo sTablePojo) {
+    public STablePojo createSchemaTable(String projectUuid, STablePojo sTablePojo) {
         log.debug("Execute createSchemaTable with parameters {}", sTablePojo);
         STable transientSTable = sTableMapper.dtoToEntity(sTablePojo);
+
+        //assigning the project
+        UserProject project = new UserProject();
+        project.setUuid(projectUuid);
+        transientSTable.setUserProject(project);
 
         // getting a reference to the items
         List<SItem> items = transientSTable.getItems();
 
+        //assigning position and iteminfo of each item
         for (int i = 0; i < items.size(); i++) {
             SItem curItem = items.get(i);
             curItem.setPosition(i);
@@ -78,7 +85,6 @@ public class STableServiceImpl implements STableService {
                 info.setItem(curItem);
                 curItem.setItemInfo(info);
             }
-            log.debug("attempting to save, {}", itemInfoMapper.entityToDto(info));
         }
 
         STable persistentSTable = sTableRepository.save(transientSTable);
@@ -103,7 +109,6 @@ public class STableServiceImpl implements STableService {
     @Override
     public void removeSchemaTable(String uuid) {
         log.debug("Execute removeSchemaTable with parameter {}", uuid);
-        STable persistentSTable = findByUuid(uuid);
-        sTableRepository.delete(persistentSTable);
+        sTableRepository.deleteById(uuid);
     }
 }

@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -35,33 +34,12 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "s_item")
-/*
- */
-@SecondaryTable(name = "s_item_info", pkJoinColumns = @PrimaryKeyJoinColumn(name = "uuid"))
 public class SItem implements Serializable {
     private static final long serialVersionUID = 4L;
 
     @Id
     @Column(name = "uuid", updatable = false, nullable = false)
     private String uuid;
-
-    @JsonIgnore
-    @ManyToOne(targetEntity = STable.class, fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "tableUuid", referencedColumnName = "uuid", updatable = false)
-    private STable table;
-
-    @Column(name = "tableUuid", updatable = false, insertable = false)
-    private String tableUuid_;
-
-    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, optional = false)
-    @PrimaryKeyJoinColumn
-    private SItemInfo itemInfo;
-
-    @JsonIgnore
-    @NonNull
-    @Column(name = "position", nullable = false)
-    private Integer position;
 
     @NonNull
     @Column(name = "type", nullable = false)
@@ -70,10 +48,28 @@ public class SItem implements Serializable {
     @NonNull
     @Column(name = "value", nullable = false)
     private String value;
+    
+    @JsonIgnore
+    @NonNull
+    @Column(name = "position", nullable = false)
+    private Integer position;
 
     @NonNull
     @Column(name = "size", nullable = false)
     private Integer size = 0;
+
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, optional = false)
+    @PrimaryKeyJoinColumn
+    private SItemInfo itemInfo;
+
+    @Column(name = "tableUuid", updatable = false, insertable = false)
+    private String tableUuid_;
+
+    @JsonIgnore
+    @ManyToOne(targetEntity = STable.class, fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "tableUuid", referencedColumnName = "uuid", updatable = false)
+    private STable table;
 
     @PrePersist
     public void init() {

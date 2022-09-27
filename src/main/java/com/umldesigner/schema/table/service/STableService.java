@@ -19,12 +19,13 @@ public interface STableService {
     /**
      * creating a table which can also include items
      * 
+     * @implSpec the implementation creates table assigned to the given project uuid
      * @apiNote the implementation can use "more elegant" way in the future
      * @see
      *      com.umldesigner.schema.table.service.SchemaTableService#createSchemaTable(com
      *      .umldesigner.schema.table.dto.SchemaTablePojo)
      */
-    public STablePojo createSchemaTable(STablePojo sTablePojo);
+    public STablePojo createSchemaTable(String projectUuid, STablePojo sTablePojo);
 
     public STablePojo updateSchemaTable(String uuid, STablePojo sTablePojo);
 

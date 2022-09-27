@@ -30,13 +30,14 @@ public interface SItemService {
     /**
      * creates list of schemaItems to a given table
      * 
+     * @deprecated needs to be reinplemented
+     * 
      * @param tUuid      uuid of the table where the items will be located
      * @param sItemPojos pojo list of the list of items we want to create
      * @return the created list
      */
     public List<SItemPojo> createSchemaItemList(String tUuid, List<SItemPojo> sItemPojos);
 
-    public Set<SItemPojo> createSchemaItemSet(String tUuid, Set<SItemPojo> sItemPojos);
 
     public SItemPojo updateSchemaItem(String uuid, SItemPojo sItemPojo);
 

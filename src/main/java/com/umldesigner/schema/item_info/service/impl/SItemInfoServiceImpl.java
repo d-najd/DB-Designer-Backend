@@ -91,7 +91,7 @@ public class SItemInfoServiceImpl implements SItemInfoService {
     public void removeSItemInfo(String uuid) {
         log.debug("Execute removeSItemInfo with parameter {}", uuid);
 
-        itemInfoRepository.delete(findByUuid(uuid));
+        itemInfoRepository.deleteById(uuid);
     }
 
 }

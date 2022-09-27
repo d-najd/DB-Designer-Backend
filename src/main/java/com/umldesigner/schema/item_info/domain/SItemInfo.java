@@ -50,11 +50,6 @@ public class SItemInfo implements Serializable {
     @Column(name = "uuid", updatable = false, nullable = false)
     private String uuid;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @MapsId
-    @JoinColumn(name = "uuid", updatable = false)
-    @JsonIgnore
-    private SItem item;
 
     @NonNull
     @Column(name = "primaryKey", nullable = false)
@@ -85,4 +80,9 @@ public class SItemInfo implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<SFK> referencedForeignKeys;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name = "uuid", updatable = false)
+    @JsonIgnore
+    private SItem item;
 }
