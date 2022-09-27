@@ -80,8 +80,11 @@ public class SItemInfoServiceImpl implements SItemInfoService {
     @Override
     public SItemInfoPojo updateSItemInfo(String uuid, SItemInfoPojo pojo) {
         log.debug("Execute createSItemInfo with parameters {}, {}", uuid, pojo);
+        
+        SItemInfo persistedSItemInfo = findByUuid(uuid);
+        itemInfoMapper.mapRequestedFieldForUpdate(persistedSItemInfo, pojo);
 
-        return null;
+        return itemInfoMapper.entityToDto(itemInfoRepository.saveAndFlush(persistedSItemInfo));
     }
 
     @Override

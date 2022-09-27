@@ -14,8 +14,6 @@ import com.umldesigner.schema.foreign_key.mapper.SFKMapper;
 import com.umldesigner.schema.foreign_key.repository.SFKRepository;
 import com.umldesigner.schema.foreign_key.service.SFKService;
 import com.umldesigner.schema.item_info.domain.SItemInfo;
-import com.umldesigner.schema.table_item.mapper.SItemMapper;
-import com.umldesigner.schema.table_item.service.SItemService;
 import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +31,6 @@ public class SFKServiceImpl implements SFKService {
 
     @Autowired
     SFKFascade sfkFascade;
-
-    @Autowired
-    SItemMapper itemMapper;
-
-    @Autowired
-    SItemService sItemService;
 
     @Override
     public SFK findByUuid(String uuid) {
@@ -96,11 +88,9 @@ public class SFKServiceImpl implements SFKService {
     public SFKPojo updateForeignKey(String uuid, SFKPojo pojo) {
         log.debug("Execute updateForeignKey with parameters {}, {}", uuid, pojo);
 
-        pojo.setUuid(uuid);
         SFK persistedSFK = findByUuid(uuid);
-        pojo.setReferencedUuid(persistedSFK.getReferencedUuid());
 
-        // just in case something changes in future, unnecessary check atm
+        //validity check
         sfkFascade.isValid(uuid, persistedSFK.getReferencedUuid(), pojo);
 
         sfkMapper.mapRequestedFieldForUpdate(persistedSFK, pojo);

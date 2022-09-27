@@ -42,38 +42,37 @@ public class SItem implements Serializable {
     private static final long serialVersionUID = 4L;
 
     @Id
-    @Column(name = "uuid", updatable = false)
+    @Column(name = "uuid", updatable = false, nullable = false)
     private String uuid;
 
     @JsonIgnore
     @ManyToOne(targetEntity = STable.class, fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NonNull
     @JoinColumn(name = "tableUuid", referencedColumnName = "uuid", updatable = false)
     private STable table;
 
     @Column(name = "tableUuid", updatable = false, insertable = false)
     private String tableUuid_;
 
-    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, optional = true)
+    @OneToOne(mappedBy = "item", cascade = CascadeType.ALL, optional = false)
     @PrimaryKeyJoinColumn
     private SItemInfo itemInfo;
 
     @JsonIgnore
     @NonNull
-    @Column(name = "position")
+    @Column(name = "position", nullable = false)
     private Integer position;
 
     @NonNull
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     private String type;
 
     @NonNull
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     private String value;
 
     @NonNull
-    @Column(name = "size")
+    @Column(name = "size", nullable = false)
     private Integer size = 0;
 
     @PrePersist

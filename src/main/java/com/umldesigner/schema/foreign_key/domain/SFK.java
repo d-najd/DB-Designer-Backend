@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -26,12 +27,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "s_fk")
-/**
- * @apiNote value1 and value2 in the identity refer to id's of SItems
- * 
- * @implSpec to use an sfk first an item has to be created
- */
+@Table(
+    name = "s_fk", 
+    uniqueConstraints = {
+        @UniqueConstraint(name = "unique_uuid_referencedUuid", 
+        columnNames = { "uuid", "referencedUuid" }) 
+    })
 public class SFK implements Serializable {
     private static final long serialVersionUID = 7L;
 
@@ -40,21 +41,21 @@ public class SFK implements Serializable {
         this.onDelete = "na";
     }
 
-    @Column(name = "uuid", updatable = false)
+    @Column(name = "uuid", updatable = false, nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Id
     private String uuid;
 
-    @Column(name = "referencedUuid", updatable = false)
+    @Column(name = "referencedUuid", updatable = false, nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private String referencedUuid;
 
     @NonNull
-    @Column(name = "onUpdate", updatable = false, length = 2)
+    @Column(name = "onUpdate", length = 2, nullable = false)
     private String onUpdate;
 
     @NonNull
-    @Column(name = "onDelete", updatable = false, length = 2)
+    @Column(name = "onDelete", length = 2, nullable = false)
     private String onDelete;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -66,7 +67,6 @@ public class SFK implements Serializable {
     @JsonIgnore
     @ManyToOne(targetEntity = SItemInfo.class, fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NonNull
     @JoinColumn(name = "referencedUuid", referencedColumnName = "uuid", updatable = false, insertable = false)
     private SItemInfo referencedItemInfo;
 

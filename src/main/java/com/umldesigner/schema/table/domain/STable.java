@@ -31,21 +31,8 @@ public class STable extends UmlObjectEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "uuid", updatable = false)
+    @Column(name = "uuid", updatable = false, nullable = false)
     private String uuid;
-
-    /*
-     * <pre>
-     * 
-     * @ManyToMany
-     * 
-     * @JoinTable(
-     * name = "schema_table_items",
-     * joinColumns = @JoinColumn(name = "value1"),
-     * inverseJoinColumns = @JoinColumn(name = "value2")
-     * )
-     * Set<SchemaItem> tableItems = new HashSet<>();
-     */
 
     @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -53,7 +40,7 @@ public class STable extends UmlObjectEntity implements Serializable {
     private List<SItem> items;
 
     @NonNull
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
     @PrePersist

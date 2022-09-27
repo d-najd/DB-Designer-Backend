@@ -29,7 +29,7 @@ public class SFKFascadeImpl implements SFKFascade {
         if (!validArgumentsCheck(pojo)) {
             log.error("Invalid Arguemnt Entered for OnDelete or OnUpdate with parameters {}", pojo);
             throw new IllegalArgumentException(
-                    "Invalid Argument entered for OnDelete or OnUpdate, available arguments are: No Action, REstrict, Cascade, Set Null, Set Default");
+                    "Invalid Argument entered for OnDelete or OnUpdate, available arguments are: No Action, REstrict, CAscade, Set Null, Set Default");
         }
 
         return true;

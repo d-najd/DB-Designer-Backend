@@ -19,6 +19,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.umldesigner.schema.foreign_key.domain.SFK;
 import com.umldesigner.schema.table_item.domain.SItem;
 
@@ -33,7 +34,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "s_item_info")
-
+@JsonIgnoreProperties({ "hibernateLazyInitializer" })
 public class SItemInfo implements Serializable {
     private static final long serialVersionUID = 5L;
 
@@ -46,7 +47,7 @@ public class SItemInfo implements Serializable {
     }
 
     @Id
-    @Column(name = "uuid", updatable = false)
+    @Column(name = "uuid", updatable = false, nullable = false)
     private String uuid;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -56,24 +57,24 @@ public class SItemInfo implements Serializable {
     private SItem item;
 
     @NonNull
-    @Column(name = "primaryKey")
+    @Column(name = "primaryKey", nullable = false)
     private Boolean primaryKey;
 
     @NonNull
-    @Column(name = "allowNull")
+    @Column(name = "allowNull", nullable = false)
     private Boolean allowNull;
 
     @NonNull
-    @Column(name = "uniqueKey")
+    @Column(name = "uniqueKey", nullable = false)
     private Boolean uniqueKey;
 
     @NonNull
-    @Column(name = "autoIncrement")
+    @Column(name = "autoIncrement", nullable = false)
     private Boolean autoIncrement;
 
     // naming the field "unsigned" causes errors so "unsinged_" is used
     @NonNull
-    @Column(name = "unsigned_")
+    @Column(name = "unsigned_", nullable = false)
     private Boolean unsigned;
 
     @OneToOne(mappedBy = "itemInfo", cascade = CascadeType.ALL, optional = true)
