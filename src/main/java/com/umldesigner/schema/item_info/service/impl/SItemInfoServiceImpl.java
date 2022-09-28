@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.umldesigner.infrastructure.exception.ResourceNotFoundException;
-import com.umldesigner.schema.foreign_key.service.SFKService;
 import com.umldesigner.schema.item_info.domain.SItemInfo;
 import com.umldesigner.schema.item_info.mapper.SItemInfoMapper;
 import com.umldesigner.schema.item_info.repository.SItemInfoRepository;

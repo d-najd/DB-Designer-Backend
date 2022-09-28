@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SFKFascadeImpl implements SFKFascade {
 
     @Autowired
-    SItemService sItemService; // TODO find a way to get rid of this
+    SItemService sItemService; // TODO find a way to get rid of this POSSIBLY USE the sfk and then get reference to the item.
 
     @Override
     public boolean isValid(String uuid, String refUuid, SFKPojo pojo) {
@@ -43,6 +43,12 @@ public class SFKFascadeImpl implements SFKFascade {
 
         return firstItem.getTable().equals(secondItem.getTable());
     }
+    
+    // TODO Finish this
+    @Override
+    public boolean sameProjectCheck(String uuid, String refUuid) {
+        return false;
+    }
 
     @Override
     public boolean validArgumentsCheck(SFKPojo pojo) {
@@ -64,4 +70,5 @@ public class SFKFascadeImpl implements SFKFascade {
 
         return true;
     }
+
 }

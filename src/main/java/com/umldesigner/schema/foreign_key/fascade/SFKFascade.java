@@ -31,6 +31,15 @@ public interface SFKFascade {
     public boolean sameTableFKCheck(String uuid, String refUuid);
 
     /**
+     * @implSpec the method checks if the items belong to the same project
+     * 
+     * @param uuid id of the main item (the one that is doing the reference)
+     * @param refUuid id of the secondary item (the one that is being referenced)
+     * @return true if the given items belong to the same table
+     */
+    public boolean sameProjectCheck(String uuid, String refUuid);
+
+    /**
      * @implSpec checks whether the given given arguments about the foreign key are valid,
      * arguments like "OnDelete", "OnUpdate" identities not included
      * 
