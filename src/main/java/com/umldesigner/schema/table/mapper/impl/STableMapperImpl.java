@@ -1,6 +1,7 @@
 package com.umldesigner.schema.table.mapper.impl;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Component;
 
 import com.umldesigner.infrastructure.mapper.AbstractGeneralMapper;
@@ -14,7 +15,6 @@ public class STableMapperImpl extends AbstractGeneralMapper implements STableMap
     public STableMapperImpl(ModelMapper modelMapper) {
         super(modelMapper);
     }
-
     @Override
     public STablePojo entityToDto(STable schemaTable) {
         return this.modelMapper.map(schemaTable, STablePojo.class);

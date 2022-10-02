@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umldesigner.infrastructure.domain.entities.UmlObjectEntity;
+import com.umldesigner.schema.foreign_key.domain.SFK;
 import com.umldesigner.schema.table_item.domain.SItem;
 import com.umldesigner.schema.user_project.domain.UserProject;
 
@@ -51,6 +53,10 @@ public class STable extends UmlObjectEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "userProject", referencedColumnName = "uuid", updatable = false)
     private UserProject userProject;
+
+    // @OneToOne(mappedBy = "referencedTable", cascade = CascadeType.ALL)
+    // @JsonIgnore
+    // private SFK referencedSfk;
 
     @PrePersist
     public void init() {

@@ -15,9 +15,9 @@ public abstract class UmlObjectEntity {
 
     @Column(name = "x")
     @NonNull
-    private float x;
+    private Float x;
 
     @Column(name = "y")
     @NonNull
-    private float y;
+    private Float y;
 }

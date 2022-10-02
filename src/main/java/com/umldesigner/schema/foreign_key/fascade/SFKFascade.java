@@ -31,6 +31,12 @@ public interface SFKFascade {
     public boolean sameTableFKCheck(String uuid, String refUuid);
 
     /**
+     * @implSpec checks whether the item and the table belong to the same table
+     * @return trye if they are from the same table, false if they are not
+     */
+    public boolean correctTableCheck(String itemUuid, String tableUuid);
+
+    /**
      * @implSpec the method checks if the items belong to the same project
      * 
      * @param uuid id of the main item (the one that is doing the reference)

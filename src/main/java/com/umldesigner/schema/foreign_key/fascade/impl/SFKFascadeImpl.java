@@ -3,10 +3,12 @@ package com.umldesigner.schema.foreign_key.fascade.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 import com.umldesigner.schema.foreign_key.fascade.SFKFascade;
+import com.umldesigner.schema.table.domain.STable;
+import com.umldesigner.schema.table.service.STableService;
 import com.umldesigner.schema.table_item.domain.SItem;
 import com.umldesigner.schema.table_item.service.SItemService;
+import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPojo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SFKFascadeImpl implements SFKFascade {
 
     @Autowired
-    SItemService sItemService; // TODO find a way to get rid of this POSSIBLY USE the sfk and then get reference to the item.
+    SItemService sItemService; // TODO find a way to get rid of this POSSIBLY USE the sfk and then get
+                               // reference to the item.
+
+    @Autowired
+    STableService sTableService;
 
     @Override
     public boolean isValid(String uuid, String refUuid, SFKPojo pojo) {
@@ -32,6 +38,14 @@ public class SFKFascadeImpl implements SFKFascade {
                     "Invalid Argument entered for OnDelete or OnUpdate, available arguments are: No Action, REstrict, CAscade, Set Null, Set Default");
         }
 
+        if (!correctTableCheck(refUuid, pojo.getReferencedTableUuid_())) {
+            log.error("the referenced item and table have to match, arguemnts {}, {}",
+                    refUuid,
+                    pojo.getReferencedTableUuid_());
+            throw new IllegalArgumentException(
+                    "the referenced item and table have to match");
+        }
+
         return true;
     }
 
@@ -43,7 +57,20 @@ public class SFKFascadeImpl implements SFKFascade {
 
         return firstItem.getTable().equals(secondItem.getTable());
     }
-    
+
+    @Override
+    public boolean correctTableCheck(String itemUuid, String tableUuid) {
+        log.debug("Execute valid table check with parameters {}, {}", itemUuid, tableUuid);
+
+        STable table = sTableService.findByUuid(tableUuid);
+        for (SItem item : table.getItems()) {
+            if (item.getUuid().equals(itemUuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // TODO Finish this
     @Override
     public boolean sameProjectCheck(String uuid, String refUuid) {

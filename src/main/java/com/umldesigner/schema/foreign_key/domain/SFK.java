@@ -14,8 +14,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,12 +25,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(
-    name = "s_fk", 
-    uniqueConstraints = {
-        @UniqueConstraint(name = "unique_uuid_referencedUuid", 
-        columnNames = { "uuid", "referencedUuid" }) 
-    })
+@Table(name = "s_fk", uniqueConstraints = {
+        @UniqueConstraint(name = "unique_uuid_referencedUuid", columnNames = { "uuid", "referencedUuid" })
+})
 public class SFK implements Serializable {
     private static final long serialVersionUID = 7L;
 
@@ -42,13 +37,22 @@ public class SFK implements Serializable {
     }
 
     @Column(name = "uuid", updatable = false, nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @Id
     private String uuid;
 
-    @Column(name = "referencedUuid", updatable = false, nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @Column(name = "referencedUuid", nullable = false)
     private String referencedUuid;
+
+    @NonNull
+    @Column(name = "referencedTableUuid", updatable = false)
+    private String referencedTableUuid_;
+
+    // TODO fix this
+    // @OneToOne(cascade = CascadeType.ALL)
+    // @JoinColumn(name = "referencedTableUuid", referencedColumnName = "uuid",
+    // insertable = false, updatable = false)
+    // @JsonIgnore
+    // private STable referencedTable;
 
     @NonNull
     @Column(name = "onDelete", length = 2, nullable = false)
@@ -66,7 +70,6 @@ public class SFK implements Serializable {
 
     @JsonIgnore
     @ManyToOne(targetEntity = SItemInfo.class, fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "referencedUuid", referencedColumnName = "uuid", updatable = false, insertable = false)
     private SItemInfo referencedItemInfo;
 
