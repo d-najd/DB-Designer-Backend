@@ -3,9 +3,10 @@
 ![vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/d-najd/UmlDesignerAppApi)
 ![reposize](https://img.shields.io/github/repo-size/d-najd/UmlDesignerAppApi)
 
-# Getting Started
+Backend for https://github.com/d-najd/DB-Designer.  
 
-Backend for an https://github.com/d-najd/DB-Designer.  
+
+# Getting Started
 
 Follow the instructions below to get a copy of the project running on your local machine
 
