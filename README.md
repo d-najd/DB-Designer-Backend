@@ -47,6 +47,6 @@ git clone --recursive https://github.com/d-najd/UmlDesignerAppApi
  Visit https://www.postman.com/collections/e3ef56648f12f06fc6e4 to see available mappings
 
 # Downloads (WORK IN PROGRESS)
-# Related Links
-- The app which the api is built for: https://github.com/d-najd/UmlDesigner
-- Shared repository (submodule) which is used between the projects: https://github.com/d-najd/UmlDesignerShared
+# Related Projects
+- [Android App](https://github.com/d-najd/DB-Designer/)
+- [Shared Repository](https://github.com/d-najd/DB-Designer-Shared/)
