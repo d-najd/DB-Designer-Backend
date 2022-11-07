@@ -39,6 +39,7 @@ import com.umldesigner.schema.table.utils.table.STableTestUtil;
 import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 
 
+@Disabled
 @SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=none")
 @AutoConfigureMockMvc
 // @AutoConfigureTestDatabase(replace = Replace.NONE)

@@ -38,10 +38,10 @@ public class SFKFascadeImpl implements SFKFascade {
                     "Invalid Argument entered for OnDelete or OnUpdate, available arguments are: No Action, REstrict, CAscade, Set Null, Set Default");
         }
 
-        if (!correctTableCheck(refUuid, pojo.getReferencedTableUuid_())) {
+        if (!correctTableCheck(refUuid, pojo.getReferencedTableUuid())) {
             log.error("the referenced item and table have to match, arguemnts {}, {}",
                     refUuid,
-                    pojo.getReferencedTableUuid_());
+                    pojo.getReferencedTableUuid());
             throw new IllegalArgumentException(
                     "the referenced item and table have to match");
         }

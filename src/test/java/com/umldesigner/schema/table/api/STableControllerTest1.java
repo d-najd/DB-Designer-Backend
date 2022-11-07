@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -34,6 +35,7 @@ import com.umldesigner.schema.table.utils.table.STableTestUtil;
 import com.umldesigner.submodules.UmlDesignerShared.schema.table.dto.STablePojo;
 
 
+@Disabled
 @WebAppConfiguration
 @WebMvcTest(STableController.class)
 //@SpringBootTest(properties = "spring.jpa.hibernate.ddl-auto=none")
