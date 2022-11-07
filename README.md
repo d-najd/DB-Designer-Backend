@@ -1,10 +1,9 @@
 # DB Designer Backend
 
-![vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/d-najd/UmlDesignerAppApi)
-![reposize](https://img.shields.io/github/repo-size/d-najd/UmlDesignerAppApi)
+Backend using Spring for the android project in related links
 
-Backend for https://github.com/d-najd/DB-Designer.  
-
+![vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/d-najd/DB-Designer-Backend)
+![reposize](https://img.shields.io/github/repo-size/d-najd/DB-Designer-Backend)
 
 # Getting Started
 
@@ -20,7 +19,7 @@ Follow the instructions below to get a copy of the project running on your local
 
 * clone the repository using [Git](https://git-scm.com/downloads)
 ```Git
-git clone --recursive https://github.com/d-najd/UmlDesignerAppApi
+git clone --recursive https://github.com/d-najd/DB-Designer-Backend
 ```
 * Set datasource url of your MYSQL DB application.properties -> spring.datasource.url
 * Set mysql user value into application.properties -> spring.datasource.username
