@@ -1,4 +1,4 @@
-# Uml Designer Api
+# DB Designer Backend
 
 ![vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/d-najd/UmlDesignerAppApi)
 ![reposize](https://img.shields.io/github/repo-size/d-najd/UmlDesignerAppApi)
