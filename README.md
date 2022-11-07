@@ -5,7 +5,7 @@
 
 # Getting Started
 
-Backend for the app for designing sql databases. 
+Backend for an https://github.com/d-najd/DB-Designer.  
 
 Follow the instructions below to get a copy of the project running on your local machine
 
