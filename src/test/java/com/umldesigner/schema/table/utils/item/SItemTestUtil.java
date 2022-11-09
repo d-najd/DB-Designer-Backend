@@ -52,7 +52,7 @@ public class SItemTestUtil {
             String uuid) {
         SItemPojo mock = new SItemPojo();
         mock.setUuid(uuid);
-        mock.setTable(table);
+       // mock.setTable(table);
         mock.setType(type);
         mock.setValue(value);
         return mock;

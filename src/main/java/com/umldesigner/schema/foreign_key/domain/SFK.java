@@ -45,7 +45,7 @@ public class SFK implements Serializable {
 
     @NonNull
     @Column(name = "referencedTableUuid", updatable = false)
-    private String referencedTableUuid_;
+    private String referencedTableUuid;
 
     // TODO fix this
     // @OneToOne(cascade = CascadeType.ALL)

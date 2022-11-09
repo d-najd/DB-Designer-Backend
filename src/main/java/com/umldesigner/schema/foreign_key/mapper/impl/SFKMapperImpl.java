@@ -13,9 +13,6 @@ import com.umldesigner.submodules.UmlDesignerShared.schema.foreign_key.dto.SFKPo
 @Component
 public class SFKMapperImpl extends AbstractGeneralMapper implements SFKMapper {
     @Autowired
-    SFKFascade sfkFascade;
-
-    @Autowired
     public SFKMapperImpl(ModelMapper modelMapper) {
         super(modelMapper);
     }

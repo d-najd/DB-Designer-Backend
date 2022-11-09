@@ -20,8 +20,10 @@ public class SItemMapperImpl extends AbstractGeneralMapper implements SItemMappe
      * prevents a recursive bug where schemaItemPojo gets called over and over (from
      * what I understand)
      * 
-     * @apiNote this is probably a dumb way of doing things but oh well
+     * @implNote  this is probably a dumb way of doing things but oh well
      */
+
+    /*
     @Override
     public void modelMapperConfig() {
         modelMapper.addMappings(
@@ -33,6 +35,8 @@ public class SItemMapperImpl extends AbstractGeneralMapper implements SItemMappe
                     }
                 });
     }
+
+     */
 
     @Override
     public SItemPojo entityToDto(SItem schemaItem) {
@@ -47,7 +51,7 @@ public class SItemMapperImpl extends AbstractGeneralMapper implements SItemMappe
     @Override
     public void mapRequestedFieldForUpdate(
             SItem entity,
-            SItemPojo dto) { // very clever
+            SItemPojo dto) {
         // entity.setPosition(dto.getPosition()); we want the server to decide this not
         // the user
         entity.setType(dto.getType());
